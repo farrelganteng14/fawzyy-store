@@ -1218,6 +1218,32 @@
 
     <div class="toast" id="toast"></div>
 
+    <!-- FIREBASE SDK (FIRESTORE) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDF_95CRMWQ06eDV51Kzd_Js2CJt3YNmHU",
+        authDomain: "fawzyy-store.firebaseapp.com",
+        projectId: "fawzyy-store",
+        storageBucket: "fawzyy-store.firebasestorage.app",
+        messagingSenderId: "479852014201",
+        appId: "1:479852014201:web:631d5d69200e6bcd5e42a8",
+        measurementId: "G-N5LXRSXRRJ"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Ekspor ke global agar bisa diakses oleh script.js
+      window.db = db;
+      window.firebaseCollections = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot };
+      
+      // Kirim event penanda firebase siap
+      window.dispatchEvent(new Event('firebase-ready'));
+    </script>
+
     <script src="script.js"></script>
   </body>
 </html>
