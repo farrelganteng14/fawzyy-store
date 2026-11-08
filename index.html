@@ -1,305 +1,1223 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fawzyy Store - Toko Gamepass & Cash DDS</title>
-  
-  <!-- CSS Utama -->
-  <link rel="stylesheet" href="style.css" />
-  
-  <!-- Google Sign-In SDK -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  
-  <!-- Firebase App & Database SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080d1b" />
 
-  <!-- Toast Notifikasi -->
-  <div id="toast" class="toast"></div>
+    <title>Toko Gamepass Fawzyy Store</title>
 
-  <!-- Header / Navbar -->
-  <header class="site-header">
-    <div class="container navbar">
-      <a href="#" class="logo">⚡ FAWZYY STORE</a>
-      
-      <nav class="nav-links" id="navLinks">
-        <a href="#produk">Produk</a>
-        <a href="#ulasan">Ulasan</a>
-        <a href="#" id="myOrdersBtn" onclick="openMyOrders(); return false;" style="display:none;">📦 Pesanan Saya</a>
-        <a href="#" id="adminMenuBtn" onclick="openAdminPanel(); return false;" style="display:none; color:#f59e0b; font-weight:bold;">⚙️ Panel Admin</a>
-      </nav>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-      <div class="nav-actions">
-        <!-- Tombol Google Login -->
-        <button id="googleLoginBtn" class="google-login-btn">
-          <span>Masuk Google</span>
-        </button>
+    <!-- SDK GOOGLE SIGN-IN RESMI -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-        <!-- Profil User (Muncul Setelah Login) -->
-        <div id="userProfile" class="user-profile" style="display:none;">
-          <span id="userName" class="user-name">USER</span>
-          <button onclick="logoutGoogle()" class="logout-btn">Keluar</button>
+  <body>
+    <div class="announcement">
+      ⚡ OPEN ORDER — Gamepass Drag Drive Simulator
+    </div>
+
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="brand" href="#">
+          <span class="brand-mark">F</span>
+          <span>
+            FAWZYY<span class="brand-light">STORE</span>
+            <small>GAMEPASS & DIGITAL GOODS</small>
+          </span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle">☰</button>
+
+        <div class="nav-links" id="navLinks">
+          <a href="#produk">Produk</a>
+          <a href="#cara-order">Cara Order</a>
+          <a href="#ulasan">Ulasan & Rating</a>
+          <a href="#faq">FAQ</a>
+          <a
+            href="javascript:void(0)"
+            id="adminMenuBtn"
+            style="display: none"
+            onclick="openAdminPanel()"
+            >🔒 Panel Admin</a
+          >
         </div>
 
-        <button class="cart-btn" id="openCart">
-          🛒 <span id="cartCount">0</span>
+        <div
+          class="nav-right"
+          style="display: flex; align-items: center; gap: 0.75rem"
+        >
+          <div id="authContainer">
+            <button
+              id="googleLoginBtn"
+              class="primary-button"
+              style="padding: 0.4rem 0.8rem; font-size: 0.85rem"
+              onclick="openLoginModal()"
+            >
+              🔑 Login Akun
+            </button>
+            <div
+              id="userProfile"
+              style="
+                display: none;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.85rem;
+              "
+            >
+              <span id="userName" style="color: #38bdf8; font-weight: 600"
+                >User</span
+              >
+              <button
+                id="myOrdersBtn"
+                onclick="openMyOrders()"
+                class="text-button"
+                style="padding: 2px 6px; font-size: 0.75rem; color: #38bdf8"
+              >
+                📦 Pesanan Saya
+              </button>
+              <button
+                onclick="logoutGoogle()"
+                class="text-button"
+                style="padding: 2px 6px; font-size: 0.75rem; color: #ef4444"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+
+          <button class="cart-button" id="openCart">
+            🛒 Keranjang <span id="cartCount">0</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content container">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="live-dot"></span>
+              TOKO GAMEPASS ROBLOX
+            </div>
+
+            <h1>Upgrade gaya<br />mainmu. <span>Gas terus!</span></h1>
+            <p>
+              Temukan Gamepass Drag Drive Simulator favoritmu. Pilih item,
+              masukkan username Roblox, lalu checkout otomatis via website
+              dengan sistem antrean aman.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#produk" class="primary-button"> Jelajahi Produk ↗ </a>
+              <a
+                href="javascript:void(0)"
+                onclick="openGuideModal()"
+                class="text-button"
+              >
+                ℹ️ Panduan Pengambilan
+              </a>
+            </div>
+
+            <div class="hero-stats">
+              <div><strong>FAST</strong><span>Respon order</span></div>
+              <div><strong>AMAN</strong><span>Sistem Antrean</span></div>
+              <div><strong>24/7</strong><span>QRIS & E-Wallet</span></div>
+            </div>
+          </div>
+
+          <div class="hero-art">
+            <div class="game-card">
+              <div class="game-card-top">
+                <span>FEATURED GAME</span>
+                <span class="game-tag">ROBLOX</span>
+              </div>
+
+              <div class="game-visual">
+                <img
+                  src="poster.jpg"
+                  alt="Drag Drive Simulator Poster"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                  onerror="this.style.display = 'none'"
+                />
+              </div>
+
+              <div class="game-card-bottom">
+                <div>
+                  <small>NOW AVAILABLE</small>
+                  <strong>Drag Drive Simulator</strong>
+                </div>
+                <span class="arrow-circle">↗</span>
+              </div>
+            </div>
+
+            <div class="floating-chip chip-top">⚡ GAMEPASS READY</div>
+            <div class="floating-chip chip-bottom">✦ FAWZYY STORE</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip">
+        <div class="container trust-items">
+          <span>✦ Pilih produk dengan mudah</span>
+          <span>✦ Banyak Pilihan Pembayaran & QRIS</span>
+          <span>✦ Antrean pesanan transparan</span>
+        </div>
+      </section>
+
+      <section class="catalog-section container" id="produk">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">KATALOG TOKO</div>
+            <h2>Temukan item <span>favoritmu.</span></h2>
+            <p>Pilih Gamepass atau Cash sesuai kebutuhanmu.</p>
+          </div>
+          <div class="catalog-note">
+            DRAG DRIVE SIMULATOR <span>● ONLINE CATALOG</span>
+          </div>
+        </div>
+
+        <div class="catalog-toolbar">
+          <div class="category-tabs" id="categoryTabs">
+            <button class="tab active" data-category="all">
+              Semua <span id="allCount">0</span>
+            </button>
+            <button class="tab" data-category="gamepass">Gamepass</button>
+            <button class="tab" data-category="cash">Cash DDS</button>
+          </div>
+
+          <div class="toolbar-right">
+            <label class="search-box">
+              <span>⌕</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Cari produk..."
+              />
+            </label>
+            <select id="sortSelect">
+              <option value="popular">Paling populer</option>
+              <option value="low">Harga termurah</option>
+              <option value="high">Harga termahal</option>
+              <option value="az">Nama A–Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          Produk tidak ditemukan.
+        </div>
+      </section>
+
+      <section class="order-section" id="cara-order">
+        <div class="container order-inner">
+          <div>
+            <div class="eyebrow">GAMPANG BANGET</div>
+            <h2>Cara order di<br /><span>Fawzyy Store.</span></h2>
+            <p>Belanja tanpa ribet dengan sistem manual terpercaya.</p>
+          </div>
+
+          <div class="steps">
+            <article class="step">
+              <span>01</span>
+              <div>
+                <h3>Pilih produk & Login</h3>
+                <p>
+                  Login dengan akun Google, lalu masukkan item pilihan ke
+                  keranjang.
+                </p>
+              </div>
+            </article>
+            <article class="step">
+              <span>02</span>
+              <div>
+                <h3>Pilih Pembayaran & Upload Bukti</h3>
+                <p>
+                  Pilih pembayaran (QRIS, DANA, GoPay, BCA, dll.), lalu upload
+                  screenshot buktinya.
+                </p>
+              </div>
+            </article>
+            <article class="step">
+              <span>03</span>
+              <div>
+                <h3>Masuk Antrean (10 Menit)</h3>
+                <p>
+                  Pesanan masuk ke sistem antrean server. Jika dalam 10 menit
+                  belum diproses, hubungi admin via WhatsApp.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="reviews-section container"
+        id="ulasan"
+        style="padding: 4rem 1rem"
+      >
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">ULASAN PEMBELI</div>
+            <h2>Rating & Pengalaman <span>Gamers ⭐</span></h2>
+            <p>Wajib login akun terlebih dahulu sebelum menuliskan ulasan.</p>
+          </div>
+        </div>
+
+        <div
+          class="add-review-box"
+          style="
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            margin-bottom: 2rem;
+          "
+        >
+          <h3 style="margin-top: 0; color: white">Tulis Ulasan Kamu</h3>
+          <input
+            type="text"
+            id="reviewName"
+            class="username-input"
+            style="margin-bottom: 0.75rem"
+            placeholder="Nama Kamu (Harus Login Dulu)"
+            readonly
+          />
+
+          <select
+            id="reviewRating"
+            style="
+              width: 100%;
+              padding: 0.75rem;
+              margin-bottom: 0.75rem;
+              background: #0f172a;
+              border: 1px solid #334155;
+              color: white;
+              border-radius: 6px;
+            "
+          >
+            <option value="5">⭐⭐⭐⭐⭐ (5/5 - Sangat Puas)</option>
+            <option value="4">⭐⭐⭐⭐ (4/5 - Bagus)</option>
+            <option value="3">⭐⭐⭐ (3/5 - Cukup)</option>
+            <option value="2">⭐⭐ (2/5 - Kurang)</option>
+            <option value="1">⭐ (1/5 - Buruk)</option>
+          </select>
+
+          <textarea
+            id="reviewText"
+            style="
+              width: 100%;
+              height: 80px;
+              padding: 0.75rem;
+              margin-bottom: 1rem;
+              background: #0f172a;
+              border: 1px solid #334155;
+              color: white;
+              border-radius: 6px;
+              resize: vertical;
+            "
+            placeholder="Tuliskan pengalaman belanja kamu..."
+          ></textarea>
+
+          <button
+            onclick="submitReview()"
+            class="primary-button"
+            style="border: none; cursor: pointer"
+          >
+            Kirim Ulasan ↗
+          </button>
+        </div>
+
+        <div
+          class="reviews-list"
+          id="reviewsList"
+          style="
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          "
+        ></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <a class="brand" href="#">
+          <span class="brand-mark">F</span>
+          <span>
+            FAWZYY<span class="brand-light">STORE</span>
+            <small>GAMEPASS & DIGITAL GOODS</small>
+          </span>
+        </a>
+        <p>© <span id="year"></span> Fawzyy Store. Made for gamers.</p>
+        <a href="#produk">Kembali ke atas ↑</a>
+      </div>
+    </footer>
+
+    <!-- KERANJANG & CHECKOUT DRAWER -->
+    <div class="overlay" id="overlay"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+      <div class="drawer-header">
+        <div>
+          <small>FAWZYY STORE</small>
+          <h2>Keranjang Belanja</h2>
+        </div>
+        <button id="closeCart" class="close-button">×</button>
+      </div>
+
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-bottom">
+        <div class="cart-total">
+          <span>Estimasi total</span>
+          <strong id="cartTotal">Rp0</strong>
+        </div>
+
+        <label class="form-label" for="robloxUsername">Username Roblox</label>
+        <input
+          class="username-input"
+          id="robloxUsername"
+          type="text"
+          placeholder="Contoh: Fawzyy123"
+          maxlength="30"
+        />
+
+        <button
+          class="checkout-button"
+          id="checkoutButton"
+          onclick="startCheckout()"
+        >
+          Lanjut ke Pembayaran ↗
         </button>
-        <button class="menu-toggle" id="menuToggle">☰</button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-content">
-      <span class="badge">🔥 TERCEPAT & TERPERCAYA 100%</span>
-      <h1>Pusat Gamepass & Cash DDS<br><span>Drag Bikes & Driving Simulator</span></h1>
-      <p>Proses kilat tanpa ribet. Amanah, cepat, dan dilayani langsung oleh admin profesional.</p>
-      
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Cari Gamepass atau Cash DDS..." />
-        <select id="sortSelect">
-          <option value="popular">Paling Populer</option>
-          <option value="low">Harga Terendah</option>
-          <option value="high">Harga Tertinggi</option>
-          <option value="az">Nama (A-Z)</option>
-        </select>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Content -->
-  <main class="container main-layout" id="produk">
-    <!-- Kategori Filter -->
-    <aside class="sidebar">
-      <h3>Kategori</h3>
-      <div class="category-tabs" id="categoryTabs">
-        <button class="tab active" data-category="all">Semua Produk (<span id="allCount">0</span>)</button>
-        <button class="tab" data-category="gamepass">Gamepass</button>
-        <button class="tab" data-category="cash">Cash DDS</button>
+        <small class="secure-note"
+          >Harus login Google terlebih dahulu. Aman & Terpercaya.</small
+        >
       </div>
     </aside>
 
-    <!-- Daftar Produk -->
-    <section class="products-section">
-      <div class="product-grid" id="productGrid"></div>
-      <div id="emptyState" class="empty-state" hidden>
-        <p>🔍 Produk tidak ditemukan.</p>
-      </div>
-    </section>
-  </main>
+    <!-- MODAL PILIH PEMBAYARAN & UPLOAD BUKTI -->
+    <div
+      id="paymentModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #0f172a;
+          padding: 2rem;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 480px;
+          border: 1px solid #334155;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+          text-align: center;
+          max-height: 90vh;
+          overflow-y: auto;
+          position: relative;
+          z-index: 1001;
+        "
+      >
+        <h2
+          style="
+            font-family: &quot;Space Grotesk&quot;, sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+            color: #38bdf8;
+          "
+        >
+          Metode Pembayaran
+        </h2>
+        <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 1rem">
+          No. Order:
+          <code id="modalOrderNo" style="color: #22c55e; font-weight: bold"
+            >#FAW-000</code
+          >
+        </p>
 
-  <!-- Ulasan Pembeli -->
-  <section class="container reviews-section" id="ulasan">
-    <h2>Ulasan Pembeli Terpercaya ⭐</h2>
-    <div class="review-form-box" style="background:#1e293b; padding:1.5rem; border-radius:8px; margin-bottom:1.5rem; border:1px solid #334155;">
-      <h3 style="margin-bottom:0.75rem; font-size:1rem; color:#38bdf8;">Tulis Ulasanmu</h3>
-      <input type="text" id="reviewName" placeholder="Nama / Username" readonly style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:#0f172a; border:1px solid #334155; color:white; border-radius:4px;" />
-      <select id="reviewRating" style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:#0f172a; border:1px solid #334155; color:white; border-radius:4px;">
-        <option value="5">⭐⭐⭐⭐⭐ (5/5 - Sangat Puas)</option>
-        <option value="4">⭐⭐⭐⭐ (4/5 - Puas)</option>
-      </select>
-      <textarea id="reviewText" placeholder="Tulis komentar ulasanmu di sini..." style="width:100%; padding:0.5rem; margin-bottom:0.5rem; background:#0f172a; border:1px solid #334155; color:white; border-radius:4px; height:80px;"></textarea>
-      <button onclick="submitReview()" style="background:#2563eb; color:white; border:none; padding:0.5rem 1rem; border-radius:4px; font-weight:bold; cursor:pointer;">Kirim Ulasan</button>
-    </div>
-    <div class="reviews-grid" id="reviewsList"></div>
-  </section>
-
-  <!-- Keranjang Drawer -->
-  <div class="overlay" id="overlay"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3>Keranjang Belanja</h3>
-      <button class="close-cart" id="closeCart">✕</button>
-    </div>
-    
-    <div style="padding: 1rem 1rem 0 1rem;">
-      <label style="font-size:0.8rem; color:#cbd5e1; display:block; margin-bottom:4px; font-weight:bold;">Username Roblox Kamu:</label>
-      <input type="text" id="robloxUsername" placeholder="Contoh: FarrelGanteng14" style="width:100%; padding:0.5rem; background:#0f172a; border:1px solid #334155; color:white; border-radius:4px; font-size:0.85rem;" />
-    </div>
-
-    <div class="cart-items" id="cartItems"></div>
-    <div class="cart-footer">
-      <div class="cart-total-row">
-        <span>Total:</span>
-        <strong id="cartTotal">Rp0</strong>
-      </div>
-      <button class="checkout-btn" onclick="startCheckout()">Lanjut ke Pembayaran ➔</button>
-    </div>
-  </div>
-
-  <!-- Modal Login Google -->
-  <div class="modal" id="loginModal">
-    <div class="modal-content" style="max-width:380px; text-align:center;">
-      <h3 style="margin-bottom:0.5rem;">🔒 Login Akun Google</h3>
-      <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:1.5rem;">Silakan login dengan akun Google resmi untuk melanjutkan transaksi & melacak pesanan.</p>
-      <button onclick="loginWithGoogle()" style="background:#ffffff; color:#0f172a; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:8px;">
-        <span style="font-size:1.1rem;">🌐</span> Masuk dengan Google
-      </button>
-      <button onclick="closeLoginModal()" style="background:transparent; color:#94a3b8; border:none; margin-top:1rem; cursor:pointer; font-size:0.8rem;">Batal</button>
-    </div>
-  </div>
-
-  <!-- Modal Panduan Pengambilan Gamepass (Slider) -->
-  <div class="modal" id="guideModal">
-    <div class="modal-content" style="max-width:500px;">
-      <h3 style="color:#38bdf8; margin-bottom:1rem;">📌 Panduan Pengambilan Gamepass</h3>
-      <div class="slider-container" style="min-height:160px; color:#cbd5e1; font-size:0.9rem; line-height:1.5;">
-        <div class="slide active">
-          <strong>Langkah 1: Add Friend Admin</strong><br>
-          Pastikan kamu sudah menambahkan akun Roblox admin agar bisa bergabung ke Private Server.
+        <!-- PILIHAN METODE PEMBAYARAN -->
+        <div style="text-align: left; margin-bottom: 1rem">
+          <label
+            style="
+              font-size: 0.8rem;
+              color: #94a3b8;
+              display: block;
+              margin-bottom: 6px;
+            "
+            >Pilih Metode Pembayaran:</label
+          >
+          <select
+            id="paymentMethodSelect"
+            onchange="changePaymentMethod()"
+            style="
+              width: 100%;
+              padding: 0.75rem;
+              background: #1e293b;
+              border: 1px solid #334155;
+              color: white;
+              border-radius: 8px;
+            "
+          >
+            <option value="qris">⚡ All QRIS (All E-Wallet & Bank)</option>
+            <option value="dana">💙 DANA / Top Up Indomaret</option>
+            <option value="gopay">💚 GoPay</option>
+            <option value="shopeepay">🧡 ShopeePay</option>
+            <option value="seabank">🌊 SeaBank</option>
+            <option value="bca">🟦 Bank BCA</option>
+            <option value="ovo">💜 OVO</option>
+          </select>
         </div>
-        <div class="slide" style="display:none;">
-          <strong>Langkah 2: Masuk Private Server</strong><br>
-          Admin akan memberikan link Private Server atau bergabunglah melalui invite server in-game.
+
+        <!-- BOX INFORMASI INSTRUKSI BAYAR -->
+        <div
+          id="paymentDetailsBox"
+          style="
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            color: #080d1b;
+          "
+        >
+          <!-- QRIS DISPLAY -->
+          <div id="qrisContainer">
+            <img
+              src="qriss.jpg"
+              alt="QRIS Fawzyy Store"
+              style="
+                width: 200px;
+                height: 200px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto;
+              "
+              onerror="
+                this.src =
+                  'https://placehold.co/200x200/ffffff/000000?text=QRIS+QR'
+              "
+            />
+            <small
+              style="
+                color: #0f172a;
+                font-weight: bold;
+                display: block;
+                margin-top: 5px;
+              "
+            >
+              SCAN DENGAN ALL E-WALLET / BANK
+            </small>
+          </div>
+
+          <!-- REKENING / NO HP DISPLAY -->
+          <div id="accountInfoContainer" style="display: none; padding: 10px 0">
+            <small
+              id="methodLabel"
+              style="display: block; color: #64748b; font-weight: bold"
+              >NO. DANA / WHATSAPP:</small
+            >
+            <strong
+              id="methodNumber"
+              style="
+                font-size: 1.2rem;
+                color: #2563eb;
+                display: block;
+                margin: 5px 0;
+              "
+              >082120455523</strong
+            >
+            <small style="color: #64748b; display: block"
+              >a.n.
+              <strong id="methodName" style="color: #080d1b"
+                >Fawzyy Store</strong
+              ></small
+            >
+            <p
+              id="methodGuideNote"
+              style="font-size: 0.75rem; color: #475569; margin-top: 8px"
+            >
+              *Bisa top up lewat Indomaret/Alfamart ke No. DANA di atas.
+            </p>
+          </div>
         </div>
-        <div class="slide" style="display:none;">
-          <strong>Langkah 3: Terima Gift / Gift Gamepass</strong><br>
-          Tunggu di dalam game sebentar, admin akan segera mengirimkan gamepass / cash pesananmu!
+
+        <div
+          style="
+            background: #1e293b;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+          "
+        >
+          <div style="margin: 0; color: #f8fafc">
+            Total Bayar:
+            <span id="modalTotalPay" style="color: #38bdf8">Rp0</span>
+          </div>
+          <p style="margin: 4px 0 0; color: #94a3b8; font-size: 0.75rem">
+            Lakukan pembayaran sesuai metode di atas, lalu upload bukti transfer
+            screenshot di bawah.
+          </p>
         </div>
-      </div>
-      <div class="slide-dots" id="slideDots" style="display:flex; justify-content:center; gap:6px; margin:1rem 0;">
-        <span style="width:8px; height:8px; border-radius:50%; background:#38bdf8;"></span>
-        <span style="width:8px; height:8px; border-radius:50%; background:#334155;"></span>
-        <span style="width:8px; height:8px; border-radius:50%; background:#334155;"></span>
-      </div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
-        <button id="slidePrev" onclick="changeSlide(-1)" style="background:#334155; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">‹ Prev</button>
-        <label style="font-size:0.75rem; color:#94a3b8;"><input type="checkbox" id="guideDontShow" /> Jangan tampilkan lagi</label>
-        <button id="slideNext" onclick="changeSlide(1)" style="background:#2563eb; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">Next ›</button>
-      </div>
-      <button onclick="guideContinue()" style="background:#22c55e; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; width:100%; margin-top:1rem; cursor:pointer;">Mengerti & Lanjut Bayar ➔</button>
-    </div>
-  </div>
 
-  <!-- Modal Pembayaran Multi-Metode -->
-  <div class="modal" id="paymentModal">
-    <div class="modal-content" style="max-width:450px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 style="color:#38bdf8; margin:0;">💳 Pembayaran Pesanan</h3>
-        <span id="modalOrderNo" style="font-weight:bold; color:#f59e0b;">#FAW-00000</span>
-      </div>
+        <label
+          style="
+            display: block;
+            text-align: left;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 4px;
+          "
+          >Upload Bukti Screenshot Pembayaran:</label
+        >
+        <input
+          type="file"
+          id="paymentProofInput"
+          accept="image/*"
+          style="
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+          "
+        />
 
-      <div style="background:#1e293b; padding:1rem; border-radius:8px; margin-bottom:1rem;">
-        <label style="font-size:0.8rem; color:#94a3b8; display:block; margin-bottom:4px;">Pilih Metode Pembayaran:</label>
-        <select id="paymentMethodSelect" onchange="changePaymentMethod()" style="width:100%; padding:0.5rem; background:#0f172a; border:1px solid #334155; color:white; border-radius:4px; font-size:0.85rem;">
-          <option value="qris">ALL QRIS (Scan & Bayar)</option>
-          <option value="dana">DANA / Indomaret / Alfamart</option>
-          <option value="gopay">GoPay</option>
-          <option value="shopeepay">ShopeePay</option>
-          <option value="seabank">SeaBank</option>
-          <option value="bca">Bank BCA</option>
-          <option value="ovo">OVO</option>
-        </select>
-      </div>
-
-      <!-- Tampilan QRIS -->
-      <div id="qrisContainer" style="text-align:center; background:#1e293b; padding:1rem; border-radius:8px; margin-bottom:1rem;">
-        <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:8px;">Scan QRIS di bawah ini pakai GoPay, DANA, OVO, BCA, dll:</p>
-        <img src="qriss.jpg" alt="QRIS Fawzyy Store" style="width:200px; height:200px; object-fit:contain; border-radius:6px; background:white; padding:4px;" onerror="this.style.display='none'" />
-      </div>
-
-      <!-- Tampilan Transfer Nomor / Akun -->
-      <div id="accountInfoContainer" style="display:none; background:#1e293b; padding:1rem; border-radius:8px; margin-bottom:1rem; font-size:0.85rem;">
-        <span id="methodLabel" style="color:#94a3b8; display:block; font-size:0.75rem;">NO. AKUN:</span>
-        <strong id="methodNumber" style="font-size:1.1rem; color:#38bdf8; display:block; margin:2px 0;">082120455523</strong>
-        <span style="color:#94a3b8; font-size:0.75rem;">Atas Nama:</span> <strong id="methodName" style="color:white;">Farrel A.F</strong>
-        <p id="methodGuideNote" style="margin-top:8px; color:#f59e0b; font-size:0.75rem; line-height:1.4;"></p>
-      </div>
-
-      <div style="background:#1e293b; padding:0.75rem; border-radius:8px; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:0.85rem; color:#94a3b8;">Total Tagihan:</span>
-        <div id="modalTotalPay" style="text-align:right;"><strong>Rp0</strong></div>
-      </div>
-
-      <div style="margin-bottom:1rem;">
-        <label style="font-size:0.8rem; color:#cbd5e1; display:block; margin-bottom:4px;">Upload Bukti Pembayaran (Screenshot):</label>
-        <input type="file" id="paymentProofInput" accept="image/*" style="width:100%; font-size:0.8rem; color:#94a3b8;" />
-      </div>
-
-      <div style="display:flex; gap:8px;">
-        <button onclick="closePaymentModal()" style="flex:1; background:#334155; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold;">Batal</button>
-        <button id="submitProofBtn" onclick="submitPaymentProof()" style="flex:2; background:#22c55e; color:white; border:none; padding:10px; border-radius:6px; cursor:pointer; font-weight:bold;">Kirim Bukti & Masuk Antrean ↗</button>
+        <button
+          id="submitProofBtn"
+          onclick="submitPaymentProof()"
+          class="checkout-button"
+          style="margin-bottom: 0.75rem; cursor: pointer"
+        >
+          Kirim Bukti & Masuk Antrean ↗
+        </button>
+        <button
+          onclick="closePaymentModal()"
+          style="
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 0.85rem;
+            cursor: pointer;
+          "
+        >
+          Batal / Tutup
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- Modal Status Antrean & Waktu -->
-  <div class="modal" id="queueModal">
-    <div class="modal-content" style="max-width:420px; text-align:center;">
-      <div style="font-size:2rem; margin-bottom:4px;">⏳</div>
-      <h3 style="margin-bottom:2px;">Pesanan Masuk Antrean</h3>
-      <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:1rem;">Nomor Order: <strong id="queueOrderNo" style="color:#38bdf8;">#FAW-00000</strong></p>
+    <!-- MODAL STATUS ANTREAN 10 MENIT -->
+    <div
+      id="queueModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #0f172a;
+          padding: 2rem;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 480px;
+          border: 1px solid #334155;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+          text-align: center;
+          position: relative;
+          z-index: 1001;
+        "
+      >
+        <div id="queueEmoji" style="font-size: 2.5rem; margin-bottom: 0.5rem">
+          ⏳
+        </div>
+        <h2
+          style="
+            font-family: &quot;Space Grotesk&quot;, sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #f8fafc;
+          "
+        >
+          Pesanan Masuk Antrean
+        </h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1.25rem">
+          Nomor Order:
+          <code id="queueOrderNo" style="color: #38bdf8; font-weight: bold"
+            >#FAW-000</code
+          >
+        </p>
 
-      <div style="background:#1e293b; padding:0.75rem; border-radius:8px; margin-bottom:1rem; font-size:0.85rem;">
-        <div style="color:#94a3b8; font-size:0.75rem; margin-bottom:2px;">STATUS SAAT INI:</div>
-        <strong id="queueStatusBadge" style="color:#f59e0b; font-size:1rem;">PENDING</strong>
-        <div id="queueProgress" style="font-size:0.75rem; color:#64748b; margin-top:6px;"></div>
+        <div style="margin-bottom: 1rem">
+          <span
+            id="queueStatusBadge"
+            class="status-badge st-pending"
+            style="
+              padding: 4px 12px;
+              border-radius: 20px;
+              font-size: 0.8rem;
+              font-weight: bold;
+            "
+            >PENDING</span
+          >
+        </div>
+
+        <div
+          id="queueProgress"
+          class="progress"
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.7rem;
+            color: #94a3b8;
+          "
+        ></div>
+
+        <div
+          style="
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+          "
+        >
+          <span
+            style="
+              font-size: 0.8rem;
+              color: #94a3b8;
+              display: block;
+              margin-bottom: 4px;
+            "
+            >Sisa Waktu Antrean / Posisi Antrean (#<span id="queuePosition"
+              >—</span
+            >):</span
+          >
+          <strong
+            id="countdownTimer"
+            style="
+              font-size: 1.8rem;
+              font-family: &quot;Space Grotesk&quot;, sans-serif;
+              color: #22c55e;
+            "
+            >10:00</strong
+          >
+        </div>
+
+        <p
+          id="queueNote"
+          style="
+            font-size: 0.8rem;
+            color: #94a3b8;
+            line-height: 1.4;
+            margin-bottom: 1.25rem;
+          "
+        >
+          Admin sedang memeriksa bukti pembayaranmu.
+        </p>
+
+        <a
+          id="waHelpButton"
+          href="#"
+          target="_blank"
+          style="
+            display: none;
+            background: #25d366;
+            color: #080d1b;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+          "
+        >
+          💬 Hubungi Admin via WhatsApp
+        </a>
+        <button
+          onclick="closeModal('queueModal')"
+          style="
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+          "
+        >
+          Tutup & Pantau Nanti
+        </button>
       </div>
-
-      <div style="background:#0f172a; padding:1rem; border-radius:8px; border:1px solid #334155; margin-bottom:1rem;">
-        <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:4px;">Sisa Waktu / Posisi Antrean (#<span id="queuePosition">1</span>):</div>
-        <div id="countdownTimer" style="font-size:1.8rem; font-weight:bold; color:#22c55e;">10:00</div>
-      </div>
-
-      <p id="queueNote" style="font-size:0.8rem; color:#cbd5e1; line-height:1.4; margin-bottom:1rem;"></p>
-
-      <!-- Tombol Bantuan WhatsApp (Terkunci / Tersembunyi sebelum 10 menit lewat) -->
-      <a id="waHelpButton" href="#" target="_blank" style="display:none; background:#25d366; color:white; text-decoration:none; padding:10px; border-radius:6px; font-weight:bold; font-size:0.85rem; margin-bottom:0.75rem; display:block;">
-        💬 Hubungi Admin via WhatsApp
-      </a>
-
-      <button onclick="closeModal('queueModal')" style="background:#334155; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:0.85rem; width:100%;">Tutup & Pantau Nanti</button>
     </div>
-  </div>
 
-  <!-- Modal Pesanan Saya -->
-  <div class="modal" id="myOrdersModal">
-    <div class="modal-content" style="max-width:500px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 style="color:#38bdf8; margin:0;">📦 Riwayat Pesanan Saya</h3>
-        <button onclick="closeModal('myOrdersModal')" style="background:transparent; color:#94a3b8; border:none; font-size:1.1rem; cursor:pointer;">✕</button>
+    <!-- MODAL PANDUAN PENGAMBILAN -->
+    <div
+      id="guideModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #0f172a;
+          padding: 2rem;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 450px;
+          border: 1px solid #334155;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+          text-align: center;
+          position: relative;
+          z-index: 1001;
+        "
+      >
+        <button
+          onclick="closeModal('guideModal')"
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+          "
+        >
+          ×
+        </button>
+
+        <div
+          style="
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+          "
+        >
+          🎟️ Panduan Pengambilan Gamepass
+        </div>
+
+        <div
+          id="guideSlidesContainer"
+          style="
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+          "
+        >
+          <div class="slide active" style="display: block">
+            <strong>Langkah 1:</strong> Pilih produk gamepass atau cash DDS
+            kesukaanmu dan masukkan ke keranjang belanja.
+          </div>
+          <div class="slide" style="display: none">
+            <strong>Langkah 2:</strong> Checkout dengan mengisi username Roblox
+            dengan benar, pilih pembayaran & upload buktinya.
+          </div>
+          <div class="slide" style="display: none">
+            <strong>Langkah 3:</strong> Masuk ke antrean sistem dan tunggu admin
+            memproses pesanan langsung ke akun Roblox kamu!
+          </div>
+        </div>
+
+        <div
+          id="slideDots"
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 1rem;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              background: #38bdf8;
+              border-radius: 50%;
+            "
+          ></span>
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              background: #334155;
+              border-radius: 50%;
+            "
+          ></span>
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              background: #334155;
+              border-radius: 50%;
+            "
+          ></span>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 1rem">
+          <button
+            id="slidePrev"
+            onclick="changeSlide(-1)"
+            style="
+              flex: 1;
+              background: #1e293b;
+              color: white;
+              border: 1px solid #334155;
+              padding: 0.5rem;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+            disabled
+          >
+            Sebelumnya
+          </button>
+          <button
+            id="slideNext"
+            onclick="changeSlide(1)"
+            style="
+              flex: 1;
+              background: #2563eb;
+              color: white;
+              border: none;
+              padding: 0.5rem;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            Selanjutnya
+          </button>
+        </div>
+
+        <div style="margin-bottom: 1rem; text-align: left">
+          <label
+            style="
+              font-size: 0.8rem;
+              color: #94a3b8;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              cursor: pointer;
+            "
+          >
+            <input type="checkbox" id="guideDontShow" /> Jangan tampilkan
+            panduan ini lagi saat checkout
+          </label>
+        </div>
+
+        <button
+          onclick="guideContinue()"
+          class="primary-button"
+          style="
+            width: 100%;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          Lanjutkan
+        </button>
       </div>
-      <div id="myOrdersList" style="max-height:350px; overflow-y:auto; padding-right:4px;"></div>
     </div>
-  </div>
 
-  <!-- Modal Panel Admin -->
-  <div class="modal" id="adminModal">
-    <div class="modal-content" style="max-width:650px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <h3 style="color:#f59e0b; margin:0;">🔒 Panel Admin - Antrean & Pesanan (Cloud Sync)</h3>
-        <button onclick="closeAdminPanel()" style="background:transparent; color:#94a3b8; border:none; font-size:1.1rem; cursor:pointer;">✕ Tutup</button>
+    <!-- MODAL PANEL ADMIN -->
+    <div
+      id="adminModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #1e293b;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 700px;
+          max-height: 85vh;
+          overflow-y: auto;
+          border: 1px solid #334155;
+          position: relative;
+          z-index: 1001;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <h2 style="margin: 0; color: #38bdf8; font-size: 1.2rem">
+            🔒 Panel Admin - Antrean & Pesanan
+          </h2>
+          <button
+            onclick="closeAdminPanel()"
+            class="text-button"
+            style="color: #ef4444; cursor: pointer"
+          >
+            [ ✖ Tutup ]
+          </button>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+          "
+        >
+          <button
+            onclick="clearAllOrders()"
+            style="
+              background: #ef4444;
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: 6px;
+              font-size: 0.8rem;
+              font-weight: bold;
+              cursor: pointer;
+            "
+          >
+            🗑️ Reset Semua Riwayat
+          </button>
+
+          <select id="adminFilter" style="padding: 0.4rem; font-size: 0.8rem">
+            <option value="ALL">Semua Status</option>
+            <option value="PENDING">PENDING</option>
+            <option value="DIPROSES">DIPROSES</option>
+            <option value="SIAP DIAMBIL">SIAP DIAMBIL</option>
+            <option value="SELESAI">SELESAI</option>
+          </select>
+        </div>
+
+        <div
+          id="adminSummary"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            margin-bottom: 1.25rem;
+          "
+        ></div>
+        <div id="adminOrderList"></div>
       </div>
+    </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; gap:10px; flex-wrap:wrap;">
-        <button onclick="clearAllOrders()" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:6px; font-size:0.75rem; font-weight:bold; cursor:pointer;">🗑️ Reset Semua Riwayat</button>
-        <select id="adminFilter" style="background:#1e293b; color:white; border:1px solid #334155; padding:6px; border-radius:6px; font-size:0.8rem;">
-          <option value="ALL">Semua Status</option>
-          <option value="PENDING">PENDING</option>
-          <option value="DIPROSES">DIPROSES</option>
-          <option value="SIAP DIAMBIL">SIAP DIAMBIL</option>
-          <option value="SELESAI">SELESAI</option>
-        </select>
+    <!-- MODAL PESANAN SAYA -->
+    <div
+      id="myOrdersModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #0f172a;
+          padding: 2rem;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 550px;
+          max-height: 85vh;
+          overflow-y: auto;
+          border: 1px solid #334155;
+          position: relative;
+          z-index: 1001;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <h2 style="color: #38bdf8; font-size: 1.2rem; margin: 0">
+            📦 Riwayat Pesanan Saya
+          </h2>
+          <button
+            onclick="closeModal('myOrdersModal')"
+            style="
+              background: none;
+              border: none;
+              color: #94a3b8;
+              font-size: 1.2rem;
+              cursor: pointer;
+            "
+          >
+            ×
+          </button>
+        </div>
+        <div
+          id="myOrdersList"
+          style="display: flex; flex-direction: column; gap: 1rem"
+        ></div>
       </div>
-
-      <div id="adminSummary" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-bottom:1rem;"></div>
-      <div id="adminOrderList" style="max-height:400px; overflow-y:auto; padding-right:4px;"></div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <p>&copy; <span id="year">2026</span> Fawzyy Store. All rights reserved.</p>
-      <p style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Pusat Gamepass & Cash DDS Roblox Terpercaya.</p>
+    <!-- MODAL LOGIN GOOGLE -->
+    <div
+      id="loginModal"
+      class="overlay"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      "
+    >
+      <div
+        style="
+          background: #0f172a;
+          padding: 2.5rem 2rem;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 380px;
+          border: 1px solid #334155;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+          position: relative;
+          text-align: center;
+          z-index: 1001;
+        "
+      >
+        <button
+          onclick="closeLoginModal()"
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+          "
+        >
+          ×
+        </button>
+
+        <div
+          style="
+            background: #2563eb;
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+          "
+        >
+          F
+        </div>
+
+        <h2
+          style="
+            font-family: &quot;Space Grotesk&quot;, sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #f8fafc;
+          "
+        >
+          Masuk ke Fawzyy Store
+        </h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 2rem">
+          Gunakan akun Google kamu untuk melanjutkan.
+        </p>
+
+        <button
+          onclick="loginWithGoogle()"
+          style="
+            width: 100%;
+            background: #1e293b;
+            color: white;
+            border: 1px solid #334155;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+          "
+        >
+          <span style="font-size: 1.1rem">🌐</span> Masuk dengan Google
+        </button>
+
+        <small
+          style="
+            display: block;
+            color: #64748b;
+            font-size: 0.7rem;
+            margin-top: 1.5rem;
+          "
+        >
+          Dengan masuk kamu setuju
+          <span style="color: #38bdf8">Syarat dan ketentuan</span> Fawzyy Store.
+        </small>
+      </div>
     </div>
-  </footer>
 
-  <!-- Script Utama (Terhubung ke Firebase & Script Toko) -->
-  <script src="script.js"></script>
-</body>
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
