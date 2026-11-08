@@ -854,7 +854,6 @@ window.addEventListener("load", () => {
   showSlide(0);
   if ($("year")) $("year").textContent = new Date().getFullYear();
 
-  // Jalankan pendengar database real-time Firebase
   initFirebaseListener();
 
   const btnHeader = $("googleLoginBtn");
@@ -895,11 +894,15 @@ if ($("closeCart")) $("closeCart").addEventListener("click", closeCart);
 if ($("overlay")) $("overlay").addEventListener("click", closeCart);
 
 if ($("menuToggle")) {
-  $("menuToggle").addEventListener("click", () => $("navLinks").classList.toggle("open"));
+  $("menuToggle").addEventListener("click", () => {
+    const links = $("navLinks");
+    if (links) links.classList.toggle("open");
+  });
 }
 
 document.querySelectorAll(".nav-links a").forEach((link) => {
   link.addEventListener("click", () => {
-    if ($("navLinks")) $("navLinks").classList.remove("open");
+    const links = $("navLinks");
+    if (links) links.classList.remove("open");
   });
 });
