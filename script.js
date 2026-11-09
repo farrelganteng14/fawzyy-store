@@ -97,7 +97,7 @@ const products = [
     id: 2,
     name: "Advance Paint Pass",
     category: "gamepass",
-    price: 6490,
+    price: 5000,
     desc: "Warna kendaraan lebih bebas",
     icon: "🎨",
     image: "cat.jpg",
