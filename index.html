@@ -164,7 +164,7 @@
               </div>
             </div>
 
-            <div class="floating-chip chip-top">⚡ GAMEPASS CLOSE!</div>
+            <div class="floating-chip chip-top">⚡ GAMEPASS OPEN!</div>
             <div class="floating-chip chip-bottom">✦ FAWZYY STORE</div>
           </div>
         </div>
@@ -706,7 +706,7 @@
             border: 1px solid #334155;
             padding: 1rem;
             border-radius: 10px;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
           "
         >
           <span
@@ -729,6 +729,36 @@
             "
             >10:00</strong
           >
+        </div>
+
+        <!-- KOTAK CATATAN / LINK PS DARI ADMIN (MENGGANTIKAN BAGIAN STATUS SELESAI SEBELUMNYA) -->
+        <div
+          style="
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid #38bdf8;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            text-align: left;
+            word-break: break-word;
+          "
+        >
+          <strong
+            style="
+              color: #38bdf8;
+              font-size: 0.8rem;
+              display: block;
+              margin-bottom: 4px;
+            "
+          >
+            📌 Catatan / Link Private Server (PS) Admin:
+          </strong>
+          <div
+            id="modalAdminNoteDisplay"
+            style="color: #f8fafc; font-size: 0.85rem; line-height: 1.4"
+          >
+            Belum ada catatan dari admin.
+          </div>
         </div>
 
         <p
@@ -1221,7 +1251,16 @@
     <!-- FIREBASE SDK (FIRESTORE) -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        getDocs,
+        doc,
+        updateDoc,
+        deleteDoc,
+        onSnapshot,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyDF_95CRMWQ06eDV51Kzd_Js2CJt3YNmHU",
@@ -1230,7 +1269,7 @@
         storageBucket: "fawzyy-store.firebasestorage.app",
         messagingSenderId: "479852014201",
         appId: "1:479852014201:web:631d5d69200e6bcd5e42a8",
-        measurementId: "G-N5LXRSXRRJ"
+        measurementId: "G-N5LXRSXRRJ",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -1238,10 +1277,18 @@
 
       // Ekspor ke global agar bisa diakses oleh script.js
       window.db = db;
-      window.firebaseCollections = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot };
-      
+      window.firebaseCollections = {
+        collection,
+        addDoc,
+        getDocs,
+        doc,
+        updateDoc,
+        deleteDoc,
+        onSnapshot,
+      };
+
       // Kirim event penanda firebase siap
-      window.dispatchEvent(new Event('firebase-ready'));
+      window.dispatchEvent(new Event("firebase-ready"));
     </script>
 
     <script src="script.js"></script>
