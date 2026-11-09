@@ -2,7 +2,7 @@
 // PENGATURAN TOKO & ADMIN
 // ==========================================
 const WHATSAPP_NUMBER = "6282120455523";
-const ADMIN_EMAIL = "farrelaf1411@gmail.com";
+const ADMIN_EMAIL = "fawzybangkit@gmail.com";
 const GOOGLE_CLIENT_ID =
   "571088132754-78seinpkcbv05l1ndtgml26e9u4657la.apps.googleusercontent.com";
 
@@ -35,14 +35,14 @@ const PAYMENT_DETAILS = {
   },
   seabank: {
     label: "SeaBank",
-    number: "901234567890",
-    name: "Fawzyy Store",
+    number: "901432823323",
+    name: "Farrel A.F",
     note: "*Transfer via SeaBank ke nomor rekening di atas.",
     isQris: false,
   },
   bca: {
     label: "Bank BCA",
-    number: "1234567890",
+    number: "Gangguan",
     name: "Fawzyy Store",
     note: "*Transfer via Bank BCA ke nomor rekening di atas.",
     isQris: false,
@@ -60,14 +60,14 @@ let currentUser = null;
 let ordersData = [];
 let reviewsData = JSON.parse(localStorage.getItem("fawzyy_reviews")) || [
   {
-    name: "BUDI_GAMER",
+    name: "Prayoga",
     rating: 5,
-    text: "Proses cepat banget, gamepass langsung mendarat!",
+    text: "Proses cepat poll, wort it beli disini",
   },
   {
     name: "RZKY_DDS",
     rating: 5,
-    text: "Top up cash amanah 100%, recommended seller.",
+    text: "Top up cash amanah 100%, recommended.",
   },
 ];
 
@@ -82,23 +82,193 @@ let guideIndex = 0;
 // DAFTAR PRODUK
 // ==========================================
 const products = [
-  { id: 1, name: "Dragspec Pass", category: "gamepass", price: 11990, desc: "Akses Drag Bikes", icon: "🏍️", image: "Dragspec.jpg", badge: "BEST SELLER", popular: 1 },
-  { id: 2, name: "Advance Paint Pass", category: "gamepass", price: 6490, desc: "Warna kendaraan lebih bebas", icon: "🎨", image: "cat.jpg", badge: "POPULAR", popular: 2 },
-  { id: 3, name: "Luxury Pass", category: "gamepass", price: 13090, desc: "Akses Sport Bikes", icon: "🏎️", image: "Luxury.jpg", badge: "POPULAR", popular: 3 },
-  { id: 4, name: "Exclusive Rims", category: "gamepass", price: 8690, desc: "Velg eksklusif", icon: "🛞", image: "velg.jpg", badge: "", popular: 4 },
-  { id: 5, name: "Custom Plate Pass", category: "gamepass", price: 8690, desc: "Kustom plat kendaraan", icon: "🔠", image: "plat.jpg", badge: "", popular: 5 },
-  { id: 6, name: "Boombox Radio", category: "gamepass", price: 3190, desc: "Putar musik favorit", icon: "🎵", image: "boombox.jpg", badge: "", popular: 6 },
-  { id: 7, name: "Premium Accessories", category: "gamepass", price: 6490, desc: "Aksesori premium", icon: "🪽", image: "premium.jpg", badge: "", popular: 7 },
-  { id: 8, name: "Suspension Pro", category: "gamepass", price: 3190, desc: "Fitur tuning kendaraan", icon: "⚙️", image: "suspensi.jpg", badge: "", popular: 8 },
-  { id: 9, name: "Police Pass", category: "gamepass", price: 16390, desc: "Roleplay sebagai polisi", icon: "🚨", image: "polisi.jpg", badge: "", popular: 9 },
-  { id: 10, name: "Slot Limit Unlocker", category: "gamepass", price: 9790, desc: "Tambahan slot kendaraan", icon: "🔓", image: "slot.jpg", badge: "", popular: 10 },
-  { id: 11, name: "2x Paycheck", category: "gamepass", price: 54391, desc: "Bonus paycheck pekerjaan", icon: "💸", image: "2x.jpg", badge: "", popular: 11 },
-  { id: 12, name: "Cash DDS 1 Juta", category: "cash", price: 990, desc: "Uang dalam game", icon: "💵", image: "uang.jpg", badge: "", popular: 12 },
-  { id: 13, name: "Cash DDS 5 Juta", category: "cash", price: 1980, desc: "Uang dalam game", icon: "💰", image: "uang.jpg", badge: "", popular: 13 },
-  { id: 14, name: "Cash DDS 10 Juta", category: "cash", price: 3850, desc: "Uang dalam game", icon: "💸", image: "uang.jpg", badge: "", popular: 14 },
-  { id: 15, name: "Cash DDS 50 Juta", category: "cash", price: 6490, desc: "Uang dalam game", icon: "🤑", image: "uang.jpg", badge: "", popular: 15 },
-  { id: 16, name: "Cash DDS 100 Juta", category: "cash", price: 10890, desc: "Uang dalam game", icon: "🏦", image: "uang.jpg", badge: "", popular: 16 },
-  { id: 17, name: "Cash DDS 500 Juta", category: "cash", price: 43890, desc: "Uang dalam game", icon: "💎", image: "uang.jpg", badge: "", popular: 17 },
+  {
+    id: 1,
+    name: "Dragspec Pass",
+    category: "gamepass",
+    price: 11990,
+    desc: "Akses Drag Bikes",
+    icon: "🏍️",
+    image: "Dragspec.jpg",
+    badge: "BEST SELLER",
+    popular: 1,
+  },
+  {
+    id: 2,
+    name: "Advance Paint Pass",
+    category: "gamepass",
+    price: 6490,
+    desc: "Warna kendaraan lebih bebas",
+    icon: "🎨",
+    image: "cat.jpg",
+    badge: "POPULAR",
+    popular: 2,
+  },
+  {
+    id: 3,
+    name: "Luxury Pass",
+    category: "gamepass",
+    price: 13090,
+    desc: "Akses Sport Bikes",
+    icon: "🏎️",
+    image: "Luxury.jpg",
+    badge: "POPULAR",
+    popular: 3,
+  },
+  {
+    id: 4,
+    name: "Exclusive Rims",
+    category: "gamepass",
+    price: 8690,
+    desc: "Velg eksklusif",
+    icon: "🛞",
+    image: "velg.jpg",
+    badge: "",
+    popular: 4,
+  },
+  {
+    id: 5,
+    name: "Custom Plate Pass",
+    category: "gamepass",
+    price: 8690,
+    desc: "Kustom plat kendaraan",
+    icon: "🔠",
+    image: "plat.jpg",
+    badge: "",
+    popular: 5,
+  },
+  {
+    id: 6,
+    name: "Boombox Radio",
+    category: "gamepass",
+    price: 3190,
+    desc: "Putar musik favorit",
+    icon: "🎵",
+    image: "boombox.jpg",
+    badge: "",
+    popular: 6,
+  },
+  {
+    id: 7,
+    name: "Premium Accessories",
+    category: "gamepass",
+    price: 6490,
+    desc: "Aksesori premium",
+    icon: "🪽",
+    image: "premium.jpg",
+    badge: "",
+    popular: 7,
+  },
+  {
+    id: 8,
+    name: "Suspension Pro",
+    category: "gamepass",
+    price: 3190,
+    desc: "Fitur tuning kendaraan",
+    icon: "⚙️",
+    image: "suspensi.jpg",
+    badge: "",
+    popular: 8,
+  },
+  {
+    id: 9,
+    name: "Police Pass",
+    category: "gamepass",
+    price: 16390,
+    desc: "Roleplay sebagai polisi",
+    icon: "🚨",
+    image: "polisi.jpg",
+    badge: "",
+    popular: 9,
+  },
+  {
+    id: 10,
+    name: "Slot Limit Unlocker",
+    category: "gamepass",
+    price: 9790,
+    desc: "Tambahan slot kendaraan",
+    icon: "🔓",
+    image: "slot.jpg",
+    badge: "",
+    popular: 10,
+  },
+  {
+    id: 11,
+    name: "2x Paycheck",
+    category: "gamepass",
+    price: 54391,
+    desc: "Bonus paycheck pekerjaan",
+    icon: "💸",
+    image: "2x.jpg",
+    badge: "",
+    popular: 11,
+  },
+  {
+    id: 12,
+    name: "Cash DDS 1 Juta",
+    category: "cash",
+    price: 990,
+    desc: "Uang dalam game",
+    icon: "💵",
+    image: "uang.jpg",
+    badge: "",
+    popular: 12,
+  },
+  {
+    id: 13,
+    name: "Cash DDS 5 Juta",
+    category: "cash",
+    price: 1980,
+    desc: "Uang dalam game",
+    icon: "💰",
+    image: "uang.jpg",
+    badge: "",
+    popular: 13,
+  },
+  {
+    id: 14,
+    name: "Cash DDS 10 Juta",
+    category: "cash",
+    price: 3850,
+    desc: "Uang dalam game",
+    icon: "💸",
+    image: "uang.jpg",
+    badge: "",
+    popular: 14,
+  },
+  {
+    id: 15,
+    name: "Cash DDS 50 Juta",
+    category: "cash",
+    price: 6490,
+    desc: "Uang dalam game",
+    icon: "🤑",
+    image: "uang.jpg",
+    badge: "",
+    popular: 15,
+  },
+  {
+    id: 16,
+    name: "Cash DDS 100 Juta",
+    category: "cash",
+    price: 10890,
+    desc: "Uang dalam game",
+    icon: "🏦",
+    image: "uang.jpg",
+    badge: "",
+    popular: 16,
+  },
+  {
+    id: 17,
+    name: "Cash DDS 500 Juta",
+    category: "cash",
+    price: 43890,
+    desc: "Uang dalam game",
+    icon: "💎",
+    image: "uang.jpg",
+    badge: "",
+    popular: 17,
+  },
 ];
 
 const $ = (id) => document.getElementById(id);
@@ -134,10 +304,20 @@ function showToast(message) {
   showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
-function openModal(id) { const el = $(id); if (el) el.style.display = "flex"; }
-function closeModal(id) { const el = $(id); if (el) el.style.display = "none"; }
-function openLoginModal() { openModal("loginModal"); }
-function closeLoginModal() { closeModal("loginModal"); }
+function openModal(id) {
+  const el = $(id);
+  if (el) el.style.display = "flex";
+}
+function closeModal(id) {
+  const el = $(id);
+  if (el) el.style.display = "none";
+}
+function openLoginModal() {
+  openModal("loginModal");
+}
+function closeLoginModal() {
+  closeModal("loginModal");
+}
 
 // ==========================================
 // FIRESTORE SYNC (REAL-TIME DATABASE)
@@ -145,7 +325,7 @@ function closeLoginModal() { closeModal("loginModal"); }
 function initRealtimeOrders() {
   if (!window.db) return;
   const { collection, onSnapshot } = window.firebaseCollections;
-  
+
   onSnapshot(collection(window.db, "orders"), (snapshot) => {
     ordersData = [];
     snapshot.forEach((docSnap) => {
@@ -160,7 +340,7 @@ function initRealtimeOrders() {
   });
 }
 
-window.addEventListener('firebase-ready', () => {
+window.addEventListener("firebase-ready", () => {
   initRealtimeOrders();
 });
 
@@ -168,15 +348,22 @@ window.addEventListener('firebase-ready', () => {
 // LOGIN GOOGLE OAUTH
 // ==========================================
 function loginWithGoogle() {
-  if (typeof google !== "undefined" && google.accounts && google.accounts.oauth2) {
+  if (
+    typeof google !== "undefined" &&
+    google.accounts &&
+    google.accounts.oauth2
+  ) {
     try {
       const client = google.accounts.oauth2.initTokenClient({
         client_id: GOOGLE_CLIENT_ID,
-        scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+        scope:
+          "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
         prompt: "select_account",
         callback: (tokenResponse) => {
           if (tokenResponse && tokenResponse.access_token) {
-            fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenResponse.access_token}`)
+            fetch(
+              `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenResponse.access_token}`,
+            )
               .then((r) => r.json())
               .then((u) => {
                 if (u && u.name) {
@@ -184,7 +371,10 @@ function loginWithGoogle() {
                     name: u.name.toUpperCase(),
                     email: (u.email || "").toLowerCase(),
                   };
-                  localStorage.setItem("fawzyy_current_user", JSON.stringify(currentUser));
+                  localStorage.setItem(
+                    "fawzyy_current_user",
+                    JSON.stringify(currentUser),
+                  );
                   closeLoginModal();
                   updateAuthUI();
                   showToast(`Berhasil login sebagai ${currentUser.name}`);
@@ -223,14 +413,18 @@ function updateAuthUI() {
 
   if (currentUser && currentUser.name) {
     if (loginBtn) loginBtn.style.setProperty("display", "none", "important");
-    if (userProfile) userProfile.style.setProperty("display", "flex", "important");
+    if (userProfile)
+      userProfile.style.setProperty("display", "flex", "important");
     if (userNameEl) userNameEl.textContent = currentUser.name;
     if (reviewNameEl) reviewNameEl.value = currentUser.name;
-    if (adminMenuBtn) adminMenuBtn.style.display = isAdmin() ? "inline-block" : "none";
+    if (adminMenuBtn)
+      adminMenuBtn.style.display = isAdmin() ? "inline-block" : "none";
     if (myOrdersBtn) myOrdersBtn.style.display = "inline-block";
   } else {
-    if (loginBtn) loginBtn.style.setProperty("display", "inline-block", "important");
-    if (userProfile) userProfile.style.setProperty("display", "none", "important");
+    if (loginBtn)
+      loginBtn.style.setProperty("display", "inline-block", "important");
+    if (userProfile)
+      userProfile.style.setProperty("display", "none", "important");
     if (adminMenuBtn) adminMenuBtn.style.display = "none";
     if (myOrdersBtn) myOrdersBtn.style.display = "none";
     if (reviewNameEl) reviewNameEl.value = "";
@@ -306,7 +500,9 @@ function renderReviews() {
 
 function submitReview() {
   if (!currentUser) {
-    alert("⚠️ Anda belum login! Silakan login akun Google terlebih dahulu untuk menulis ulasan.");
+    alert(
+      "⚠️ Anda belum login! Silakan login akun Google terlebih dahulu untuk menulis ulasan.",
+    );
     openLoginModal();
     return;
   }
@@ -385,7 +581,8 @@ function renderCart() {
   $("cartTotal").textContent = rupiah(totalPrice);
 
   if (!cart.length) {
-    $("cartItems").innerHTML = `<div class="cart-empty">🛒<br><br>Keranjangmu masih kosong.<br>Yuk pilih produk dulu!</div>`;
+    $("cartItems").innerHTML =
+      `<div class="cart-empty">🛒<br><br>Keranjangmu masih kosong.<br>Yuk pilih produk dulu!</div>`;
     return;
   }
 
@@ -406,8 +603,14 @@ function renderCart() {
     .join("");
 }
 
-function openCart() { $("cartDrawer").classList.add("open"); $("overlay").classList.add("show"); }
-function closeCart() { $("cartDrawer").classList.remove("open"); $("overlay").classList.remove("show"); }
+function openCart() {
+  $("cartDrawer").classList.add("open");
+  $("overlay").classList.add("show");
+}
+function closeCart() {
+  $("cartDrawer").classList.remove("open");
+  $("overlay").classList.remove("show");
+}
 
 // ==========================================
 // SLIDER PANDUAN
@@ -426,10 +629,13 @@ function showSlide(i) {
     d.style.background = idx === guideIndex ? "#38bdf8" : "#334155";
   });
   if ($("slidePrev")) $("slidePrev").disabled = guideIndex === 0;
-  if ($("slideNext")) $("slideNext").disabled = guideIndex === slides.length - 1;
+  if ($("slideNext"))
+    $("slideNext").disabled = guideIndex === slides.length - 1;
 }
 
-function changeSlide(step) { showSlide(guideIndex + step); }
+function changeSlide(step) {
+  showSlide(guideIndex + step);
+}
 
 function guideContinue() {
   if ($("guideDontShow") && $("guideDontShow").checked) {
@@ -450,7 +656,9 @@ function generateOrderNo() {
 
 function startCheckout() {
   if (!currentUser) {
-    alert("⚠️ Anda belum login! Harap login dengan Google terlebih dahulu sebelum checkout.");
+    alert(
+      "⚠️ Anda belum login! Harap login dengan Google terlebih dahulu sebelum checkout.",
+    );
     openLoginModal();
     return;
   }
@@ -532,7 +740,9 @@ function openPayment() {
   openModal("paymentModal");
 }
 
-function closePaymentModal() { closeModal("paymentModal"); }
+function closePaymentModal() {
+  closeModal("paymentModal");
+}
 
 function compressImage(file, maxSize = 900, quality = 0.7) {
   return new Promise((resolve, reject) => {
@@ -546,7 +756,9 @@ function compressImage(file, maxSize = 900, quality = 0.7) {
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * scale);
         canvas.height = Math.round(img.height * scale);
-        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas
+          .getContext("2d")
+          .drawImage(img, 0, 0, canvas.width, canvas.height);
         resolve(canvas.toDataURL("image/jpeg", quality));
       };
       img.src = e.target.result;
@@ -558,7 +770,9 @@ function compressImage(file, maxSize = 900, quality = 0.7) {
 async function submitPaymentProof() {
   const fileInput = $("paymentProofInput");
   if (!fileInput || !fileInput.files[0]) {
-    return alert("⚠️ Harap upload screenshot bukti pembayaran terlebih dahulu!");
+    return alert(
+      "⚠️ Harap upload screenshot bukti pembayaran terlebih dahulu!",
+    );
   }
   const file = fileInput.files[0];
   if (!file.type.startsWith("image/")) {
@@ -613,7 +827,8 @@ function queuePosition(order) {
 function progressHTML(status) {
   const idx = STATUSES.indexOf(status);
   return STATUSES.map(
-    (s, i) => `<span style="color:${i <= idx ? "#22c55e" : "#64748b"}">${s}</span>`,
+    (s, i) =>
+      `<span style="color:${i <= idx ? "#22c55e" : "#64748b"}">${s}</span>`,
   ).join(" › ");
 }
 
@@ -638,12 +853,15 @@ function refreshQueueModal() {
 
   const badge = $("queueStatusBadge");
   if (badge) badge.textContent = order.status;
-  if ($("queueProgress")) $("queueProgress").innerHTML = progressHTML(order.status);
+  if ($("queueProgress"))
+    $("queueProgress").innerHTML = progressHTML(order.status);
 
   const pos = queuePosition(order);
-  if ($("queuePosition")) $("queuePosition").textContent = pos ? `#${pos}` : "—";
+  if ($("queuePosition"))
+    $("queuePosition").textContent = pos ? `#${pos}` : "—";
 
-  const left = QUEUE_LIMIT_SECONDS - Math.floor((Date.now() - order.createdAt) / 1000);
+  const left =
+    QUEUE_LIMIT_SECONDS - Math.floor((Date.now() - order.createdAt) / 1000);
   const timer = $("countdownTimer");
   const waBtn = $("waHelpButton");
 
@@ -667,10 +885,27 @@ function refreshQueueModal() {
     }
   }
 
+  // MENAMPILKAN CATATAN / LINK PS DARI PANEL ADMIN
+  const noteDisplay = $("modalAdminNoteDisplay");
+  if (noteDisplay) {
+    if (order.adminNote && order.adminNote.trim() !== "") {
+      // Mengubah teks link URL otomatis menjadi link aktif yang bisa diklik
+      const formattedNote = esc(order.adminNote).replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" style="color: #38bdf8; font-weight: bold; text-decoration: underline;">$1 ↗</a>',
+      );
+      noteDisplay.innerHTML = formattedNote;
+    } else {
+      noteDisplay.innerHTML =
+        '<span style="color: #94a3b8; font-style: italic;">Belum ada catatan/link dari admin.</span>';
+    }
+  }
+
   const notes = {
     PENDING: "Admin sedang memeriksa bukti pembayaranmu.",
     DIPROSES: "Pembayaran terverifikasi! Admin sedang menyiapkan pesananmu.",
-    "SIAP DIAMBIL": "🎉 Gamepass-mu SIAP DIAMBIL!",
+    "SIAP DIAMBIL":
+      "🎉 Gamepass-mu SIAP DIAMBIL! Silakan cek link Private Server di atas.",
     SELESAI: "✅ Pesanan selesai. Terima kasih!",
   };
   if ($("queueNote")) $("queueNote").innerHTML = notes[order.status] || "";
@@ -685,7 +920,9 @@ function openAdminPanel() {
   renderAdminOrders();
 }
 
-function closeAdminPanel() { closeModal("adminModal"); }
+function closeAdminPanel() {
+  closeModal("adminModal");
+}
 
 function renderAdminOrders() {
   const filterEl = $("adminFilter");
@@ -713,7 +950,9 @@ function renderAdminOrders() {
 
   listContainer.innerHTML = list
     .map((o) => {
-      const items = (o.items || []).map((i) => `${esc(i.name)} (${i.qty}x)`).join(", ");
+      const items = (o.items || [])
+        .map((i) => `${esc(i.name)} (${i.qty}x)`)
+        .join(", ");
       const pos = queuePosition(o);
       return `
       <div style="background:#0f172a; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #334155;">
@@ -742,7 +981,8 @@ function renderAdminOrders() {
 
         <div style="display:flex; gap:5px; margin-top:0.75rem; flex-wrap:wrap;">
           ${STATUSES.map(
-            (s) => `<button onclick="setOrderStatus('${o.id}', '${s}')" style="background:${o.status === s ? "#2563eb" : "#1e293b"}; color:white; border:1px solid #334155; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">${s}</button>`,
+            (s) =>
+              `<button onclick="setOrderStatus('${o.id}', '${s}')" style="background:${o.status === s ? "#2563eb" : "#1e293b"}; color:white; border:1px solid #334155; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">${s}</button>`,
           ).join("")}
           <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🗑️</button>
         </div>
@@ -756,7 +996,9 @@ async function saveAdminNote(docId) {
   const inputEl = $(`note_${docId}`);
   if (inputEl && window.db) {
     const { doc, updateDoc } = window.firebaseCollections;
-    await updateDoc(doc(window.db, "orders", docId), { adminNote: inputEl.value.trim() });
+    await updateDoc(doc(window.db, "orders", docId), {
+      adminNote: inputEl.value.trim(),
+    });
     showToast("Catatan berhasil disimpan ke server!");
   }
 }
@@ -830,20 +1072,26 @@ if ($("categoryTabs")) {
     const b = e.target.closest("[data-category]");
     if (!b) return;
     activeCategory = b.dataset.category;
-    document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t === b));
+    document
+      .querySelectorAll(".tab")
+      .forEach((t) => t.classList.toggle("active", t === b));
     renderProducts();
   });
 }
 
-if ($("adminFilter")) $("adminFilter").addEventListener("change", renderAdminOrders);
-if ($("searchInput")) $("searchInput").addEventListener("input", renderProducts);
+if ($("adminFilter"))
+  $("adminFilter").addEventListener("change", renderAdminOrders);
+if ($("searchInput"))
+  $("searchInput").addEventListener("input", renderProducts);
 if ($("sortSelect")) $("sortSelect").addEventListener("change", renderProducts);
 if ($("openCart")) $("openCart").addEventListener("click", openCart);
 if ($("closeCart")) $("closeCart").addEventListener("click", closeCart);
 if ($("overlay")) $("overlay").addEventListener("click", closeCart);
 
 if ($("menuToggle")) {
-  $("menuToggle").addEventListener("click", () => $("navLinks").classList.toggle("open"));
+  $("menuToggle").addEventListener("click", () =>
+    $("navLinks").classList.toggle("open"),
+  );
 }
 
 document.querySelectorAll(".nav-links a").forEach((link) => {
