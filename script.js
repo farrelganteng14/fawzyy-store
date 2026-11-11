@@ -1,5 +1,5 @@
 // ==========================================
-// PENGATURAN TOKO & ADMIN
+// PENGATURAN TOKO & ADMIN & MULTI-BAHASA
 // ==========================================
 const WHATSAPP_NUMBER = "6282120455523";
 const ADMIN_EMAIL = "fawzybangkit@gmail.com";
@@ -9,6 +9,317 @@ const GOOGLE_CLIENT_ID =
 const QUEUE_LIMIT_SECONDS = 600; // 10 menit
 const STATUSES = ["PENDING", "DIPROSES", "SIAP DIAMBIL", "SELESAI"];
 const ACTIVE_STATUSES = ["PENDING", "DIPROSES"];
+
+// Kamus Multi-Bahasa (ID & EN)
+let currentLang = localStorage.getItem("fawzyy_lang") || "id";
+
+const translations = {
+  id: {
+    pageTitle: "FAWZYY STORE - Top Up Game & Digital Goods",
+    navHome: "Beranda",
+    navCheck: "Cek Pesanan (FS)",
+    navOrder: "Cara Order",
+    navReviews: "Ulasan & Rating",
+    btnLogin: "Masuk",
+    btnRegister: "Daftar",
+    myOrders: "📦 Pesanan Saya",
+    btnLogout: "Logout",
+    cartTitle: "Keranjang",
+    heroEyebrow: "TOKO TOP UP & GAMEPASS TERPERCAYA",
+    heroTitle: "Fawzyy Store <br /><span>Gamepass & Robux</span>",
+    heroDesc:
+      "Platform top up game dan gamepass Drag Drive Simulator termurah, aman, legal 100%, dan buka 24 jam dengan sistem antrean transparan.",
+    heroBtnExplore: "Jelajahi Produk ↗",
+    stat1Title: "FAST",
+    stat1Desc: "Respon order",
+    stat2Title: "AMAN",
+    stat2Desc: "Sistem Antrean",
+    stat3Desc: "QRIS & E-Wallet",
+    featuredGame: "FEATURED GAME",
+    nowAvailable: "NOW AVAILABLE",
+    chipOpen: "⚡ OPEN ORDER!",
+    trust1: "✦ Pilih produk dengan mudah",
+    trust2: "✦ Banyak Pilihan Pembayaran & QRIS",
+    trust3: "✦ Antrean pesanan transparan dengan ID FS",
+    catalogEyebrow: "KATALOG TOKO",
+    catalogTitle: "Temukan item <span>favoritmu.</span>",
+    catalogDesc: "Pilih Gamepass atau Cash sesuai kebutuhanmu.",
+    tabAll: "Semua",
+    tabGamepass: "Gamepass",
+    tabCash: "Cash DDS",
+    tabRobux: "Robux",
+    searchPlaceholder: "Cari produk...",
+    sortPopular: "Paling populer",
+    sortLow: "Harga termurah",
+    sortHigh: "Harga termahal",
+    sortAz: "Nama A–Z",
+    emptyProduct: "Produk tidak ditemukan.",
+    orderEyebrow: "GAMPANG BANGET",
+    orderTitle: "Cara order di<br /><span>Fawzyy Store.</span>",
+    orderDesc: "Belanja tanpa ribet dengan sistem manual terpercaya.",
+    step1Title: "Pilih produk & Masuk Akun",
+    step1Desc: "Login akun Google, lalu masukkan item pilihan ke keranjang.",
+    step2Title: "Pilih Pembayaran & Upload Bukti",
+    step2Desc:
+      "Pilih pembayaran (QRIS, DANA, GoPay, BCA, dll.), lalu upload screenshot buktinya.",
+    step3Title: "Cek Pesanan Menggunakan ID FS",
+    step3Desc:
+      "Pantau pesananmu menggunakan nomor unik berformat FS (Tahun/Bulan) yang otomatis dibuatkan sistem.",
+    reviewsEyebrow: "ULASAN PEMBELI",
+    reviewsTitle: "Rating & Pengalaman <span>Gamers ⭐</span>",
+    reviewsDesc: "Wajib login akun terlebih dahulu sebelum menuliskan ulasan.",
+    writeReviewTitle: "Tulis Ulasan Kamu",
+    reviewNamePlaceholder: "Nama Kamu (Harus Login Dulu)",
+    reviewTextPlaceholder: "Tuliskan pengalaman belanja kamu...",
+    btnSendReview: "Kirim Ulasan ↗",
+    footerDesc:
+      "Fawzyystore adalah platform top up game terpercaya di Indonesia dengan harga murah, proses aman, legal 100%, dan buka 24 jam. Tersedia berbagai kebutuhan gaming termasuk Gamepass Roblox via sistem antrean cepat.",
+    securePayment: "Pembayaran Aman",
+    helpTitle: "Butuh Bantuan?",
+    chatWa: "Chat WhatsApp",
+    onlineSupport: "Respon Cepat 24/7",
+    operasional: "Jam Operasional: 08:00 - 23:00 WIB",
+    menuTitle: "Menu",
+    menuCheck: "Cek Pesanan",
+    menuCatalog: "Katalog Produk",
+    menuReviews: "Ulasan & Rating",
+    secureTitle: "Jaminan Transaksi",
+    guaranteeDesc:
+      "Garansi uang kembali 100% apabila layanan gagal terkirim karena kesalahan sistem.",
+    legalSafe: "100% Legal & Aman",
+    socialTitle: "Sosial Media",
+    terms: "Syarat & Ketentuan",
+    privacy: "Kebijakan Privasi",
+    cartHeading: "Keranjang Belanja",
+    estTotal: "Estimasi total",
+    robloxLabel: "Username Roblox",
+    checkoutBtn: "Lanjut ke Pembayaran ↗",
+    secureNote: "Harus login akun terlebih dahulu. Aman & Terpercaya.",
+    alertTitle: "Perhatian",
+    alertBtnOk: "OK",
+    alertRegTitle: "Informasi Pendaftaran",
+    alertRegMsg:
+      "Fitur pendaftaran manual sedang disiapkan dengan verifikasi email. Silakan gunakan Google untuk login instan!",
+    checkOrderTitle: "Cek Pesanan",
+    checkOrderDesc:
+      "Masukkan nomor pesanan berformat <code style='color: var(--accent-red);'>FS2611XXXXX</code> untuk melihat detail pembelian Anda.",
+    checkOrderPlaceholder: "Contoh: FS26114892",
+    checkOrderBtn: "Cek Pesanan ↗",
+    paymentModalTitle: "Metode Pembayaran",
+    selectPaymentLabel: "Pilih Metode Pembayaran:",
+    totalPayText: "Total Bayar:",
+    paymentInstructionsDesc:
+      "Lakukan pembayaran sesuai metode di atas, lalu upload bukti transfer screenshot di bawah.",
+    uploadProofLabel: "Upload Bukti Screenshot Pembayaran:",
+    submitProofBtn: "Kirim Bukti & Masuk Antrean ↗",
+    cancelBtn: "Batal / Tutup",
+    queueTitle: "Pesanan Masuk Antrean",
+    queueTimerLabel: "Sisa Waktu Antrean / Posisi Antrean:",
+    adminNoteLabel: "📌 Catatan / Link Private Server (PS) Admin:",
+    noAdminNote: "Belum ada catatan dari admin.",
+    waHelpBtn: "💬 Hubungi Admin via WhatsApp",
+    closeQueueBtn: "Tutup & Pantau Nanti",
+    slidePrev: "Sebelumnya",
+    slideNext: "Selanjutnya",
+    dontShowAgain: "Jangan tampilkan panduan ini lagi saat checkout",
+    slideContinue: "Lanjutkan",
+    myOrdersModalTitle: "📦 Riwayat Pesanan Saya",
+    welcomeBack: "WELCOME <br />BACK,",
+    storeSubtitle: "FAWZYYSTORE - Top Up Game Murah, Aman & Terpercaya 2026",
+    tabLogin: "Masuk",
+    tabRegister: "Daftar",
+    welcomeTitle: "Selamat Datang",
+    welcomeDesc: "Silakan masuk untuk melanjutkan transaksi.",
+    googleLoginBtnText: "Lanjutkan dengan Google",
+    registerTitle: "Buat Akun",
+    registerDesc: "Silakan lengkapi data diri Anda untuk bergabung.",
+    regName: "Nama Lengkap",
+    regEmail: "Alamat Email (Simulasi Verifikasi)",
+    regPhone: "Nomor WhatsApp",
+    regPass: "Kata Sandi",
+    regSubmitBtn: "Daftar Sekarang ↗",
+    orLoginWith: "ATAU MASUK DENGAN",
+    termsNotice: "Dengan masuk kamu setuju",
+    termsNoticeLink: "Syarat dan Ketentuan",
+  },
+  en: {
+    pageTitle: "FAWZYY STORE - Game Top Up & Digital Goods",
+    navHome: "Home",
+    navCheck: "Check Order (FS)",
+    navOrder: "How to Order",
+    navReviews: "Reviews & Rating",
+    btnLogin: "Login",
+    btnRegister: "Register",
+    myOrders: "📦 My Orders",
+    btnLogout: "Logout",
+    cartTitle: "Cart",
+    heroEyebrow: "TRUSTED TOP UP & GAMEPASS STORE",
+    heroTitle: "Fawzyy Store <br /><span>Gamepass & Robux</span>",
+    heroDesc:
+      "The cheapest, safest, 100% legal Drag Drive Simulator top up and gamepass platform, open 24/7 with a transparent queue system.",
+    heroBtnExplore: "Explore Products ↗",
+    stat1Title: "FAST",
+    stat1Desc: "Order response",
+    stat2Title: "SAFE",
+    stat2Desc: "Queue System",
+    stat3Desc: "QRIS & E-Wallet",
+    featuredGame: "FEATURED GAME",
+    nowAvailable: "NOW AVAILABLE",
+    chipOpen: "⚡ OPEN ORDER!",
+    trust1: "✦ Choose products easily",
+    trust2: "✦ Many Payment Options & QRIS",
+    trust3: "✦ Transparent queue with FS ID",
+    catalogEyebrow: "STORE CATALOG",
+    catalogTitle: "Find your favorite <span>items.</span>",
+    catalogDesc: "Choose Gamepass or Cash according to your needs.",
+    tabAll: "All",
+    tabGamepass: "Gamepass",
+    tabCash: "Cash DDS",
+    tabRobux: "Robux",
+    searchPlaceholder: "Search products...",
+    sortPopular: "Most popular",
+    sortLow: "Lowest price",
+    sortHigh: "Highest price",
+    sortAz: "Name A–Z",
+    emptyProduct: "Product not found.",
+    orderEyebrow: "SUPER EASY",
+    orderTitle: "How to order at<br /><span>Fawzyy Store.</span>",
+    orderDesc: "Shop without hassle using a trusted manual system.",
+    step1Title: "Select products & Login",
+    step1Desc: "Log in with your Google account, then add items to your cart.",
+    step2Title: "Select Payment & Upload Proof",
+    step2Desc:
+      "Choose payment (QRIS, DANA, GoPay, BCA, etc.), then upload your transfer screenshot.",
+    step3Title: "Check Order Using FS ID",
+    step3Desc:
+      "Track your order using the unique FS format containing year/month generated by the system.",
+    reviewsEyebrow: "CUSTOMER REVIEWS",
+    reviewsTitle: "Ratings & Gamer <span>Experiences ⭐</span>",
+    reviewsDesc: "You must log in to your account before writing a review.",
+    writeReviewTitle: "Write Your Review",
+    reviewNamePlaceholder: "Your Name (Must Login First)",
+    reviewTextPlaceholder: "Write about your shopping experience...",
+    btnSendReview: "Submit Review ↗",
+    footerDesc:
+      "Fawzyystore is a trusted game top up platform in Indonesia with low prices, safe processes, 100% legal, and open 24 hours. Various gaming needs available including Roblox Gamepass via fast queue system.",
+    securePayment: "Secure Payment",
+    helpTitle: "Need Help?",
+    chatWa: "WhatsApp Chat",
+    onlineSupport: "Fast Response 24/7",
+    operasional: "Operating Hours: 08:00 - 23:00 WIB",
+    menuTitle: "Menu",
+    menuCheck: "Check Order",
+    menuCatalog: "Product Catalog",
+    menuReviews: "Reviews & Rating",
+    secureTitle: "Transaction Guarantee",
+    guaranteeDesc:
+      "100% money back guarantee if service fails to deliver due to system error.",
+    legalSafe: "100% Legal & Safe",
+    socialTitle: "Social Media",
+    terms: "Terms & Conditions",
+    privacy: "Privacy Policy",
+    cartHeading: "Shopping Cart",
+    estTotal: "Estimated total",
+    robloxLabel: "Roblox Username",
+    checkoutBtn: "Proceed to Payment ↗",
+    secureNote: "Must login first. Safe & Trusted.",
+    alertTitle: "Attention",
+    alertBtnOk: "OK",
+    alertRegTitle: "Registration Notice",
+    alertRegMsg:
+      "Manual registration feature is being prepared with email verification. Please use Google for instant login!",
+    checkOrderTitle: "Check Order",
+    checkOrderDesc:
+      "Enter order number in <code style='color: var(--accent-red);'>FS2611XXXXX</code> format to view purchase details.",
+    checkOrderPlaceholder: "Example: FS26114892",
+    checkOrderBtn: "Check Order ↗",
+    paymentModalTitle: "Payment Method",
+    selectPaymentLabel: "Select Payment Method:",
+    totalPayText: "Total Pay:",
+    paymentInstructionsDesc:
+      "Make payment according to the method above, then upload screenshot proof below.",
+    uploadProofLabel: "Upload Payment Screenshot Proof:",
+    submitProofBtn: "Send Proof & Join Queue ↗",
+    cancelBtn: "Cancel / Close",
+    queueTitle: "Order in Queue",
+    queueTimerLabel: "Queue Time Remaining / Position:",
+    adminNoteLabel: "📌 Admin Notes / Private Server (PS) Link:",
+    noAdminNote: "No notes from admin yet.",
+    waHelpBtn: "💬 Contact Admin via WhatsApp",
+    closeQueueBtn: "Close & Monitor Later",
+    slidePrev: "Previous",
+    slideNext: "Next",
+    dontShowAgain: "Don't show this guide again during checkout",
+    slideContinue: "Continue",
+    myOrdersModalTitle: "📦 My Order History",
+    welcomeBack: "WELCOME <br />BACK,",
+    storeSubtitle: "FAWZYYSTORE - Cheap, Safe & Trusted Game Top Up 2026",
+    tabLogin: "Login",
+    tabRegister: "Register",
+    welcomeTitle: "Welcome",
+    welcomeDesc: "Please login to continue transactions.",
+    googleLoginBtnText: "Continue with Google",
+    registerTitle: "Create Account",
+    registerDesc: "Please fill in your details to join.",
+    regName: "Full Name",
+    regEmail: "Email Address (Verification Sim)",
+    regPhone: "WhatsApp Number",
+    regPass: "Password",
+    regSubmitBtn: "Register Now ↗",
+    orLoginWith: "OR LOGIN WITH",
+    termsNotice: "By logging in you agree to",
+    termsNoticeLink: "Terms & Conditions",
+  },
+};
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem("fawzyy_lang", lang);
+
+  const flagImg = $("langFlagImg");
+  const textCode = $("langTextCode");
+  if (flagImg && textCode) {
+    if (lang === "id") {
+      flagImg.src = "images/ind.jpg"; // <-- Tambahkan folder images/
+      textCode.textContent = "ID";
+    } else {
+      flagImg.src = "images/eng.jpg"; // <-- Tambahkan folder images/
+      textCode.textContent = "EN";
+    }
+  }
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+
+  const searchInput = $("searchInvoiceInput");
+  if (searchInput && translations[lang]["checkOrderPlaceholder"]) {
+    searchInput.placeholder = translations[lang]["checkOrderPlaceholder"];
+  }
+}
+function toggleLanguage() {
+  const nextLang = currentLang === "id" ? "en" : "id";
+  applyLanguage(nextLang);
+}
+
+function showCustomAlert(title, message) {
+  $("customAlertTitle").textContent = title;
+  $("customAlertMessage").textContent = message;
+  openModal("customAlertModal");
+}
+function closeCustomAlert() {
+  closeModal("customAlertModal");
+}
 
 const PAYMENT_DETAILS = {
   qris: { label: "ALL QRIS", isQris: true },
@@ -269,15 +580,14 @@ const products = [
     badge: "",
     popular: 17,
   },
-  // --- TAMBAHKAN PRODUK BARU DI BAWAH INI ---
   {
     id: 18,
     name: "100 Robux",
     category: "robux",
-    price: 15500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
+    price: 15500,
     desc: "Robux legal via Gamepass / T-Shirt",
     icon: "R$",
-    image: "robux.jpg", // Kosongkan jika pakai ikon teks R$
+    image: "robux.jpg",
     badge: "PROMO",
     popular: 18,
   },
@@ -285,10 +595,10 @@ const products = [
     id: 19,
     name: "500 Robux",
     category: "robux",
-    price: 77500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
+    price: 77500,
     desc: "Robux legal via Username Roblox",
     icon: "R$",
-    image: "500.jpg", // Kosongkan jika pakai ikon teks R$
+    image: "500.jpg",
     badge: "PROMO",
     popular: 19,
   },
@@ -322,16 +632,14 @@ function showToast(message) {
   const toast = $("toast");
   if (!toast) return;
 
-  // Hitung total item terbaru di keranjang untuk ditampilkan di notifikasi
   const totalItems = cart.reduce((s, i) => s + i.qty, 0);
   const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
-  // Ubah isi toast menjadi interaktif (bisa diklik untuk buka keranjang)
   toast.innerHTML = `
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; cursor: pointer;" onclick="openCart()">
       <div>
         <strong>🛒 ${message}</strong>
-        <div style="font-size: 0.75rem; color: #38bdf8; margin-top: 2px;">
+        <div style="font-size: 0.75rem; color: var(--accent-red); margin-top: 2px;">
           Total di keranjang: ${totalItems} item (${rupiah(totalPrice)}) — <strong>Klik untuk lihat</strong>
         </div>
       </div>
@@ -340,11 +648,7 @@ function showToast(message) {
   `;
 
   toast.classList.add("show");
-
-  // Clear timer lama supaya notifikasi tidak langsung hilang cepat-cepat
   clearTimeout(showToast.timer);
-
-  // Notifikasi akan otomatis sembunyi setelah 5 detik (atau bisa diatur lebih lama)
   showToast.timer = setTimeout(() => {
     toast.classList.remove("show");
   }, 5000);
@@ -358,15 +662,86 @@ function closeModal(id) {
   const el = $(id);
   if (el) el.style.display = "none";
 }
-function openLoginModal() {
-  openModal("loginModal");
+
+function openAuthModal(mode = "login") {
+  openModal("authModal");
+  switchAuthTab(mode);
 }
-function closeLoginModal() {
-  closeModal("loginModal");
+function closeAuthModal() {
+  closeModal("authModal");
+}
+
+function switchAuthTab(tab) {
+  const loginTab = $("tabLoginBtn");
+  const regTab = $("tabRegisterBtn");
+  const loginBox = $("formLoginContainer");
+  const regBox = $("formRegisterContainer");
+
+  if (tab === "login") {
+    loginTab.style.color = "white";
+    loginTab.style.borderBottom = "2px solid var(--accent-red)";
+    regTab.style.color = "var(--text-muted)";
+    regTab.style.borderBottom = "none";
+    loginBox.style.display = "block";
+    regBox.style.display = "none";
+  } else {
+    regTab.style.color = "white";
+    regTab.style.borderBottom = "2px solid var(--accent-red)";
+    loginTab.style.color = "var(--text-muted)";
+    loginTab.style.borderBottom = "none";
+    regBox.style.display = "block";
+    loginBox.style.display = "none";
+  }
+}
+
+function openSearchModal() {
+  openModal("searchInvoiceModal");
 }
 
 // ==========================================
-// FIRESTORE SYNC (REAL-TIME DATABASE)
+// CEK PESANAN MENGGUNAKAN ID FS (TANPA SPASI)
+// ==========================================
+function searchInvoiceAction() {
+  const code = $("searchInvoiceInput").value.trim().toUpperCase();
+  const resContainer = $("searchInvoiceResult");
+  if (!code) {
+    resContainer.innerHTML = `<p style="color:#ef4444; font-size:0.8rem;">Masukkan nomor pesanan FS terlebih dahulu.</p>`;
+    return;
+  }
+
+  const found = ordersData.find((o) => o.orderNo.toUpperCase() === code);
+  if (!found) {
+    resContainer.innerHTML = `<p style="color:#ef4444; font-size:0.8rem; text-align:center; padding:10px;">Nomor order <strong>${esc(code)}</strong> tidak ditemukan.</p>`;
+    return;
+  }
+
+  let completionNote = "";
+  if (found.status === "SELESAI") {
+    completionNote = `
+      <div style="margin-top:10px; background:rgba(34,197,94,0.1); border:1px solid #22c55e; padding:10px; border-radius:6px; color:#22c55e; font-size:0.75rem; text-align:center;">
+        <strong>🎉 Terima kasih telah berbelanja di Fawzyy Store!</strong><br>
+        Jangan lupa join Saluran WhatsApp kami & berikan rating/ulasan terbaik di web ini ya! ⭐
+      </div>
+    `;
+  }
+
+  resContainer.innerHTML = `
+    <div style="background:var(--bg-main); padding:12px; border-radius:8px; border:1px solid var(--border-color); font-size:0.8rem;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <strong style="color:var(--accent-red);">${esc(found.orderNo)}</strong>
+        <span style="background:rgba(239,68,68,0.2); color:var(--accent-red); padding:2px 6px; border-radius:4px; font-weight:bold;">${esc(found.status)}</span>
+      </div>
+      <p style="margin:2px 0;">Roblox: <code style="color:var(--accent-red);">${esc(found.roblox)}</code></p>
+      <p style="margin:2px 0;">Total: <strong>${rupiah(found.total)}</strong></p>
+      ${found.adminNote ? `<div style="margin-top:6px; color:#38bdf8;"><strong>Catatan Admin:</strong> ${esc(found.adminNote)}</div>` : ""}
+      ${completionNote}
+      <button onclick="openQueueModal('${esc(found.orderNo)}'); closeModal('searchInvoiceModal');" style="margin-top:8px; width:100%; background:var(--accent-red); color:white; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:bold;">Pantau Antrean Live ↗</button>
+    </div>
+  `;
+}
+
+// ==========================================
+// FIRESTORE SYNC
 // ==========================================
 function initRealtimeOrders() {
   if (!window.db) return;
@@ -377,7 +752,6 @@ function initRealtimeOrders() {
     snapshot.forEach((docSnap) => {
       ordersData.push({ id: docSnap.id, ...docSnap.data() });
     });
-    // Urutkan dari yang terbaru/terlama sesuai kebutuhan
     ordersData.sort((a, b) => b.createdAt - a.createdAt);
 
     if ($("adminModal") && $("adminModal").style.display === "flex") {
@@ -421,9 +795,9 @@ function loginWithGoogle() {
                     "fawzyy_current_user",
                     JSON.stringify(currentUser),
                   );
-                  closeLoginModal();
+                  closeAuthModal();
                   updateAuthUI();
-                  showToast(`Berhasil login sebagai ${currentUser.name}`);
+                  showToast(`Berhasil masuk sebagai ${currentUser.name}`);
                 }
               });
           }
@@ -442,7 +816,7 @@ function logoutGoogle() {
   currentUser = null;
   localStorage.removeItem("fawzyy_current_user");
   updateAuthUI();
-  showToast("Berhasil logout.");
+  showToast("Berhasil keluar.");
 }
 
 function isAdmin() {
@@ -451,6 +825,7 @@ function isAdmin() {
 
 function updateAuthUI() {
   const loginBtn = $("googleLoginBtn");
+  const regBtn = $("registerBtn");
   const userProfile = $("userProfile");
   const userNameEl = $("userName");
   const reviewNameEl = $("reviewName");
@@ -459,6 +834,7 @@ function updateAuthUI() {
 
   if (currentUser && currentUser.name) {
     if (loginBtn) loginBtn.style.setProperty("display", "none", "important");
+    if (regBtn) regBtn.style.setProperty("display", "none", "important");
     if (userProfile)
       userProfile.style.setProperty("display", "flex", "important");
     if (userNameEl) userNameEl.textContent = currentUser.name;
@@ -469,6 +845,8 @@ function updateAuthUI() {
   } else {
     if (loginBtn)
       loginBtn.style.setProperty("display", "inline-block", "important");
+    if (regBtn)
+      regBtn.style.setProperty("display", "inline-block", "important");
     if (userProfile)
       userProfile.style.setProperty("display", "none", "important");
     if (adminMenuBtn) adminMenuBtn.style.display = "none";
@@ -494,30 +872,40 @@ function openMyOrders() {
     container.innerHTML = `<p style="color:#94a3b8; text-align:center; padding: 1.5rem;">Belum ada riwayat pesanan.</p>`;
   } else {
     container.innerHTML = myOrders
-      .map(
-        (o) => `
-        <div style="background:#1e293b; padding:1rem; border-radius:8px; border:1px solid #334155; margin-bottom: 0.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-            <strong style="color:#38bdf8;">${esc(o.orderNo)}</strong>
-            <span style="background:#38bdf820; color:#38bdf8; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;">${esc(o.status)}</span>
-          </div>
-          <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Roblox: <code style="color:#38bdf8;">${esc(o.roblox)}</code></p>
-          <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Total: <strong>${rupiah(o.total)}</strong></p>
-          
-          ${
-            o.adminNote
-              ? `<div style="margin-top: 8px; background: rgba(56, 189, 248, 0.1); border: 1px dashed #38bdf8; padding: 0.5rem; border-radius: 6px; font-size: 0.8rem; color: #38bdf8;">
-                   <strong>💬 Catatan dari Admin:</strong><br>${esc(o.adminNote)}
-                 </div>`
-              : ``
-          }
+      .map((o) => {
+        let finishBox = "";
+        if (o.status === "SELESAI") {
+          finishBox = `
+              <div style="margin-top:8px; background:rgba(34,197,94,0.1); border:1px solid #22c55e; padding:8px; border-radius:6px; color:#22c55e; font-size:0.75rem; text-align:center;">
+                <strong>🎉 Terima kasih telah berbelanja!</strong><br>Jangan lupa join Saluran WA & beri rating web ini ya! ⭐
+              </div>
+            `;
+        }
+        return `
+          <div style="background:var(--bg-main); padding:1rem; border-radius:8px; border:1px solid var(--border-color); margin-bottom: 0.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <strong style="color:var(--accent-red);">${esc(o.orderNo)}</strong>
+              <span style="background:rgba(239,68,68,0.2); color:var(--accent-red); padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;">${esc(o.status)}</span>
+            </div>
+            <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Roblox: <code style="color:var(--accent-red);">${esc(o.roblox)}</code></p>
+            <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Total: <strong>${rupiah(o.total)}</strong></p>
+            
+            ${
+              o.adminNote
+                ? `<div style="margin-top: 8px; background: rgba(239, 68, 68, 0.1); border: 1px dashed var(--accent-red); padding: 0.5rem; border-radius: 6px; font-size: 0.8rem; color: var(--accent-red);">
+                     <strong>💬 Catatan dari Admin:</strong><br>${esc(o.adminNote)}
+                   </div>`
+                : ``
+            }
 
-          <button onclick="openQueueModal('${esc(o.orderNo)}'); closeModal('myOrdersModal');" style="margin-top:8px; background:#2563eb; color:white; border:none; padding:6px 10px; border-radius:4px; font-size:0.75rem; cursor:pointer; width:100%; font-weight:bold;">
-            🔍 Lihat Live Antrean / Waktu
-          </button>
-        </div>
-      `,
-      )
+            ${finishBox}
+
+            <button onclick="openQueueModal('${esc(o.orderNo)}'); closeModal('myOrdersModal');" style="margin-top:8px; background:var(--accent-red); color:white; border:none; padding:6px 10px; border-radius:4px; font-size:0.75rem; cursor:pointer; width:100%; font-weight:bold;">
+              🔍 Lihat Live Antrean / Waktu
+            </button>
+          </div>
+        `;
+      })
       .join("");
   }
 
@@ -533,12 +921,12 @@ function renderReviews() {
   list.innerHTML = reviewsData
     .map(
       (rev) => `
-    <div style="background:#1e293b; padding:1.25rem; border-radius:8px; border:1px solid #334155;">
+    <div style="background:var(--bg-card); padding:1.25rem; border-radius:8px; border:1px solid var(--border-color);">
       <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
         <strong>${esc(rev.name)}</strong>
         <span>${"⭐".repeat(rev.rating)}</span>
       </div>
-      <p>${esc(rev.text)}</p>
+      <p style="color:var(--text-muted);">${esc(rev.text)}</p>
     </div>`,
     )
     .join("");
@@ -546,10 +934,11 @@ function renderReviews() {
 
 function submitReview() {
   if (!currentUser) {
-    alert(
-      "⚠️ Anda belum login! Silakan login akun Google terlebih dahulu untuk menulis ulasan.",
+    showCustomAlert(
+      "Perhatian",
+      "Anda belum login! Silakan login akun Google terlebih dahulu untuk menulis ulasan.",
     );
-    openLoginModal();
+    openAuthModal("login");
     return;
   }
   const text = $("reviewText").value.trim();
@@ -586,7 +975,7 @@ function renderProducts() {
     <article class="product-card">
       <div class="product-art">
         ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
-        <span class="product-category">${p.category === "cash" ? "CASH DDS" : "GAMEPASS"}</span>
+        <span class="product-category">${p.category === "cash" ? "CASH DDS" : p.category === "robux" ? "ROBUX" : "GAMEPASS"}</span>
         ${p.image ? `<img src="${p.image}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'" />` : `<span class="product-symbol">${p.icon}</span>`}
       </div>
       <div class="product-info">
@@ -602,68 +991,45 @@ function renderProducts() {
     )
     .join("");
 
-  // Fungsi untuk memutar efek suara notifikasi (menggunakan Web Audio API tanpa file external)
-  function playNotificationSound(type = "success") {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-
-      osc.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-
-      if (type === "success") {
-        // Suara ting (nada ganda naik)
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nada D5
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // Nada A5
-        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(
-          0.01,
-          audioCtx.currentTime + 0.3,
-        );
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
-      } else if (type === "delete") {
-        // Suara hapus (nada turun)
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.15);
-        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(
-          0.01,
-          audioCtx.currentTime + 0.2,
-        );
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.2);
-      }
-    } catch (e) {
-      console.log("Audio diblokir browser sebelum ada interaksi.");
-    }
-  }
-
-  function addToCart(id) {
-    const product = products.find((i) => i.id === id);
-    const existing = cart.find((i) => i.id === id);
-    if (existing) existing.qty += 1;
-    else cart.push({ ...product, qty: 1 });
-
-    playNotificationSound("success"); // <--- TAMBAHKAN INI
-    renderCart();
-    showToast(`${product.name} ditambahkan ke keranjang`);
-  }
-  function clearCart() {
-    if (cart.length === 0) return;
-    if (confirm("Apakah kamu yakin ingin mengosongkan semua isi keranjang?")) {
-      cart = [];
-      playNotificationSound("delete"); // <--- TAMBAHKAN INI
-      renderCart();
-      showToast("Keranjang berhasil dikosongkan");
-    }
-  }
-
   $("emptyState").hidden = shown.length > 0;
   $("allCount").textContent = products.length;
+}
+
+function playNotificationSound(type = "success") {
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    if (type === "success") {
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
+      gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioCtx.currentTime + 0.3,
+      );
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.3);
+    } else if (type === "delete") {
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.15);
+      gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioCtx.currentTime + 0.2,
+      );
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.2);
+    }
+  } catch (e) {
+    console.log("Audio diblokir browser.");
+  }
 }
 
 function addToCart(id) {
@@ -671,29 +1037,40 @@ function addToCart(id) {
   const existing = cart.find((i) => i.id === id);
   if (existing) existing.qty += 1;
   else cart.push({ ...product, qty: 1 });
+
+  playNotificationSound("success");
   renderCart();
   showToast(`${product.name} ditambahkan ke keranjang`);
 }
 
 function removeFromCart(id) {
   cart = cart.filter((i) => i.id !== id);
+  playNotificationSound("delete");
   renderCart();
 }
+
 function updateCartQty(id, change) {
   const item = cart.find((i) => i.id === id);
   if (!item) return;
 
   item.qty += change;
-
-  // Jika jumlahnya kurang dari 1, otomatis hapus dari keranjang atau biarkan minimal 1
   if (item.qty <= 0) {
     cart = cart.filter((i) => i.id !== id);
     showToast(`${item.name} dihapus dari keranjang`);
   } else {
     showToast(`Jumlah ${item.name} diubah menjadi ${item.qty}`);
   }
-
   renderCart();
+}
+
+function clearCart() {
+  if (cart.length === 0) return;
+  if (confirm("Apakah kamu yakin ingin mengosongkan semua isi keranjang?")) {
+    cart = [];
+    playNotificationSound("delete");
+    renderCart();
+    showToast("Keranjang berhasil dikosongkan");
+  }
 }
 
 function renderCart() {
@@ -708,10 +1085,9 @@ function renderCart() {
     return;
   }
 
-  // Kita tambahkan tombol "Hapus Semua" di bagian atas daftar keranjang
   let html = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;">
-      <span style="font-size: 0.8rem; color: #94a3b8;">Daftar Produk (${totalItems})</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted);">Daftar Produk (${totalItems})</span>
       <button onclick="clearCart()" style="background: none; border: none; color: #ef4444; font-size: 0.75rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px;">
         🗑️ Hapus Semua
       </button>
@@ -721,18 +1097,18 @@ function renderCart() {
   html += cart
     .map(
       (i) => `
-    <div class="cart-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: #1e293b; padding: 10px; border-radius: 8px; border: 1px solid #334155;">
-      <div class="cart-thumb" style="width: 45px; height: 45px; flex-shrink: 0; overflow:hidden; display:flex; align-items:center; justify-content:center; border-radius: 6px; background: #0f172a;">
+    <div class="cart-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: var(--bg-main); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+      <div class="cart-thumb" style="width: 45px; height: 45px; flex-shrink: 0; overflow:hidden; display:flex; align-items:center; justify-content:center; border-radius: 6px; background: var(--bg-card);">
         ${i.image ? `<img src="${i.image}" alt="${i.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />` : i.icon}
       </div>
       <div class="cart-detail" style="flex: 1;">
         <strong style="font-size: 0.9rem; color: #f8fafc; display: block; margin-bottom: 2px;">${esc(i.name)}</strong>
-        <small style="color: #38bdf8; font-size: 0.8rem;">${rupiah(i.price)}</small>
+        <small style="color: var(--accent-red); font-size: 0.8rem;">${rupiah(i.price)}</small>
         
         <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
-          <button onclick="updateCartQty(${i.id}, -1)" style="background: #0f172a; color: white; border: 1px solid #334155; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">-</button>
+          <button onclick="updateCartQty(${i.id}, -1)" style="background: var(--bg-card); color: white; border: 1px solid var(--border-color); width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">-</button>
           <span style="font-size: 0.85rem; font-weight: bold; color: #f8fafc; min-width: 15px; text-align: center;">${i.qty}</span>
-          <button onclick="updateCartQty(${i.id}, 1)" style="background: #0f172a; color: white; border: 1px solid #334155; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">+</button>
+          <button onclick="updateCartQty(${i.id}, 1)" style="background: var(--bg-card); color: white; border: 1px solid var(--border-color); width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">+</button>
         </div>
       </div>
       
@@ -742,14 +1118,6 @@ function renderCart() {
     .join("");
 
   $("cartItems").innerHTML = html;
-}
-function clearCart() {
-  if (cart.length === 0) return;
-  if (confirm("Apakah kamu yakin ingin mengosongkan semua isi keranjang?")) {
-    cart = [];
-    renderCart();
-    showToast("Keranjang berhasil dikosongkan");
-  }
 }
 
 function openCart() {
@@ -762,53 +1130,23 @@ function closeCart() {
 }
 
 // ==========================================
-// SLIDER PANDUAN
-// ==========================================
-function showSlide(i) {
-  const slides = document.querySelectorAll("#guideModal .slide");
-  const dots = document.querySelectorAll("#slideDots span");
-  if (!slides.length) return;
-  guideIndex = Math.max(0, Math.min(i, slides.length - 1));
-
-  slides.forEach((s, idx) => {
-    s.style.display = idx === guideIndex ? "block" : "none";
-    s.classList.toggle("active", idx === guideIndex);
-  });
-  dots.forEach((d, idx) => {
-    d.style.background = idx === guideIndex ? "#38bdf8" : "#334155";
-  });
-  if ($("slidePrev")) $("slidePrev").disabled = guideIndex === 0;
-  if ($("slideNext"))
-    $("slideNext").disabled = guideIndex === slides.length - 1;
-}
-
-function changeSlide(step) {
-  showSlide(guideIndex + step);
-}
-
-function guideContinue() {
-  if ($("guideDontShow") && $("guideDontShow").checked) {
-    localStorage.setItem("fawzyy_guide_hide", "1");
-  }
-  closeModal("guideModal");
-  if (currentCheckoutData && $("paymentModal").style.display !== "flex") {
-    openPayment();
-  }
-}
-
-// ==========================================
-// CHECKOUT & PEMBAYARAN KE FIRESTORE
+// CHECKOUT & PEMBAYARAN KE FIRESTORE (FORMAT FS2611XXXX)
 // ==========================================
 function generateOrderNo() {
-  return `#FAW-${Math.floor(10000 + Math.random() * 90000)}`;
+  const now = new Date();
+  const yy = String(now.getFullYear()).slice(-2);
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `FS${yy}${mm}${rand}`;
 }
 
 function startCheckout() {
   if (!currentUser) {
-    alert(
-      "⚠️ Anda belum login! Harap login dengan Google terlebih dahulu sebelum checkout.",
+    showCustomAlert(
+      "Perhatian",
+      "Anda belum login! Harap login dengan Google terlebih dahulu sebelum checkout.",
     );
-    openLoginModal();
+    openAuthModal("login");
     return;
   }
   if (!cart.length) return showToast("Keranjang masih kosong!");
@@ -835,14 +1173,7 @@ function startCheckout() {
   };
 
   closeCart();
-
-  if (localStorage.getItem("fawzyy_guide_hide") === "1") {
-    openPayment();
-  } else {
-    if ($("guideDontShow")) $("guideDontShow").checked = false;
-    showSlide(0);
-    openModal("guideModal");
-  }
+  openPayment();
 }
 
 function changePaymentMethod() {
@@ -919,13 +1250,14 @@ function compressImage(file, maxSize = 900, quality = 0.7) {
 async function submitPaymentProof() {
   const fileInput = $("paymentProofInput");
   if (!fileInput || !fileInput.files[0]) {
-    return alert(
-      "⚠️ Harap upload screenshot bukti pembayaran terlebih dahulu!",
+    return showCustomAlert(
+      "Peringatan",
+      "Harap upload screenshot bukti pembayaran terlebih dahulu!",
     );
   }
   const file = fileInput.files[0];
   if (!file.type.startsWith("image/")) {
-    return alert("⚠️ File harus berupa gambar!");
+    return showCustomAlert("Peringatan", "File harus berupa gambar!");
   }
 
   const btn = $("submitProofBtn");
@@ -939,7 +1271,6 @@ async function submitPaymentProof() {
     currentCheckoutData.createdAt = Date.now();
     currentCheckoutData.date = new Date().toLocaleString("id-ID");
 
-    // Kirim ke Firestore Database Online
     const { collection, addDoc } = window.firebaseCollections;
     await addDoc(collection(window.db, "orders"), currentCheckoutData);
 
@@ -950,10 +1281,16 @@ async function submitPaymentProof() {
     if ($("robloxUsername")) $("robloxUsername").value = "";
     renderCart();
     openQueueModal(orderNo);
-    showToast("Pesanan berhasil dikirim!");
+    showCustomAlert(
+      "Berhasil!",
+      `Pesanan berhasil dikirim!\n\n📌 Catat / Hafalkan Nomor Pesanan Anda:\n${orderNo}\n\nNomor ini diperlukan untuk mengecek status pesanan.`,
+    );
   } catch (err) {
     console.error(err);
-    alert("❌ Gagal mengirim pesanan ke server. Coba lagi.");
+    showCustomAlert(
+      "Kesalahan",
+      "Gagal mengirim pesanan ke server. Coba lagi.",
+    );
   } finally {
     if (btn) {
       btn.disabled = false;
@@ -971,14 +1308,6 @@ function queuePosition(order) {
     .filter((o) => ACTIVE_STATUSES.includes(o.status))
     .sort((a, b) => a.createdAt - b.createdAt);
   return active.findIndex((o) => o.orderNo === order.orderNo) + 1;
-}
-
-function progressHTML(status) {
-  const idx = STATUSES.indexOf(status);
-  return STATUSES.map(
-    (s, i) =>
-      `<span style="color:${i <= idx ? "#22c55e" : "#64748b"}">${s}</span>`,
-  ).join(" › ");
 }
 
 function openQueueModal(orderNo) {
@@ -1002,13 +1331,8 @@ function refreshQueueModal() {
 
   const badge = $("queueStatusBadge");
   if (badge) badge.textContent = order.status;
-  if ($("queueProgress"))
-    $("queueProgress").innerHTML = progressHTML(order.status);
 
   const pos = queuePosition(order);
-  if ($("queuePosition"))
-    $("queuePosition").textContent = pos ? `#${pos}` : "—";
-
   const left =
     QUEUE_LIMIT_SECONDS - Math.floor((Date.now() - order.createdAt) / 1000);
   const timer = $("countdownTimer");
@@ -1034,28 +1358,28 @@ function refreshQueueModal() {
     }
   }
 
-  // MENAMPILKAN CATATAN / LINK PS DARI PANEL ADMIN
   const noteDisplay = $("modalAdminNoteDisplay");
   if (noteDisplay) {
     if (order.adminNote && order.adminNote.trim() !== "") {
-      // Mengubah teks link URL otomatis menjadi link aktif yang bisa diklik
       const formattedNote = esc(order.adminNote).replace(
         /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank" style="color: #38bdf8; font-weight: bold; text-decoration: underline;">$1 ↗</a>',
+        '<a href="$1" target="_blank" style="color: var(--accent-red); font-weight: bold; text-decoration: underline;">$1 ↗</a>',
       );
       noteDisplay.innerHTML = formattedNote;
     } else {
       noteDisplay.innerHTML =
-        '<span style="color: #94a3b8; font-style: italic;">Belum ada catatan/link dari admin.</span>';
+        '<span style="color: var(--text-muted); font-style: italic;">Belum ada catatan dari admin.</span>';
     }
   }
 
   const notes = {
-    PENDING: "Admin sedang memeriksa bukti pembayaranmu.",
+    PENDING:
+      "Admin sedang memeriksa bukti pembayaranmu. <br><strong style='color:#f59e0b;'>💡 Harap ingat / catat nomor pesanan Anda!</strong>",
     DIPROSES: "Pembayaran terverifikasi! Admin sedang menyiapkan pesananmu.",
     "SIAP DIAMBIL":
       "🎉 Gamepass-mu SIAP DIAMBIL! Silakan cek link Private Server di atas.",
-    SELESAI: "✅ Pesanan selesai. Terima kasih!",
+    SELESAI:
+      "✅ Pesanan selesai!<br><strong style='color:#22c55e;'>Terima kasih telah berbelanja di Fawzyy Store! Jangan lupa join Saluran WhatsApp & beri rating/ulasan terbaikmu ya! ⭐</strong>",
   };
   if ($("queueNote")) $("queueNote").innerHTML = notes[order.status] || "";
 }
@@ -1081,7 +1405,7 @@ function renderAdminOrders() {
   if (summary) {
     summary.innerHTML = STATUSES.map((s) => {
       const n = ordersData.filter((o) => o.status === s).length;
-      return `<div style="background:#1e293b; padding:0.6rem; border-radius:8px; text-align:center;"><strong>${n}</strong><br><small style="font-size:0.65rem; color:#94a3b8;">${s}</small></div>`;
+      return `<div style="background:var(--bg-main); padding:0.6rem; border-radius:8px; text-align:center;"><strong>${n}</strong><br><small style="font-size:0.65rem; color:var(--text-muted);">${s}</small></div>`;
     }).join("");
   }
 
@@ -1093,7 +1417,7 @@ function renderAdminOrders() {
     .sort((a, b) => a.createdAt - b.createdAt);
 
   if (!list.length) {
-    listContainer.innerHTML = `<p style="color:#94a3b8; text-align:center; padding: 1.5rem;">Tidak ada pesanan.</p>`;
+    listContainer.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding: 1.5rem;">Tidak ada pesanan.</p>`;
     return;
   }
 
@@ -1104,34 +1428,34 @@ function renderAdminOrders() {
         .join(", ");
       const pos = queuePosition(o);
       return `
-      <div style="background:#0f172a; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #334155;">
+      <div style="background:var(--bg-main); padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid var(--border-color);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-          <strong style="color:#38bdf8;">${esc(o.orderNo)} ${pos ? `<small style="color:#94a3b8;">· antrean #${pos}</small>` : ""}</strong>
-          <span style="background:#38bdf820; color:#38bdf8; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;">${esc(o.status)}</span>
+          <strong style="color:var(--accent-red);">${esc(o.orderNo)} ${pos ? `<small style="color:var(--text-muted);">· antrean #${pos}</small>` : ""}</strong>
+          <span style="background:rgba(239,68,68,0.2); color:var(--accent-red); padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;">${esc(o.status)}</span>
         </div>
         <p style="margin:4px 0; font-size:0.85rem; color:#f8fafc;">Pembeli: <strong>${esc(o.buyer)}</strong> (${esc(o.email)})</p>
-        <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Username Roblox: <code style="color:#38bdf8; background:#1e293b; padding:2px 6px; border-radius:4px;">${esc(o.roblox)}</code></p>
+        <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Username Roblox: <code style="color:var(--accent-red); background:var(--bg-card); padding:2px 6px; border-radius:4px;">${esc(o.roblox)}</code></p>
         <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Metode Bayar: <span style="color:#f59e0b; font-weight:bold;">${esc(o.paymentMethod || "QRIS")}</span></p>
         <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Item: ${items || "-"}</p>
         <p style="margin:4px 0; font-size:0.85rem; color:#cbd5e1;">Total: <strong>${rupiah(o.total)}</strong></p>
-        <p style="margin:4px 0; font-size:0.75rem; color:#94a3b8;">Waktu: ${esc(o.date)}</p>
+        <p style="margin:4px 0; font-size:0.75rem; color:var(--text-muted);">Waktu: ${esc(o.date)}</p>
 
-        <div style="margin-top: 0.75rem; background: #1e293b; padding: 0.75rem; border-radius: 6px; border: 1px solid #334155;">
-          <label style="font-size: 0.75rem; color: #38bdf8; display: block; margin-bottom: 4px; font-weight: bold;">
+        <div style="margin-top: 0.75rem; background: var(--bg-card); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color);">
+          <label style="font-size: 0.75rem; color: var(--accent-red); display: block; margin-bottom: 4px; font-weight: bold;">
             📝 Catatan / Link Gamepass / Info Server:
           </label>
           <div style="display: flex; gap: 6px;">
-            <input type="text" id="note_${o.id}" value="${esc(o.adminNote || "")}" placeholder="Tulis link private server / catatan..." style="flex: 1; background: #0f172a; border: 1px solid #334155; color: white; padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.8rem;" />
-            <button onclick="saveAdminNote('${o.id}')" style="background: #2563eb; color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Simpan</button>
+            <input type="text" id="note_${o.id}" value="${esc(o.adminNote || "")}" placeholder="Tulis link private server / catatan..." style="flex: 1; background: var(--bg-main); border: 1px solid var(--border-color); color: white; padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.8rem;" />
+            <button onclick="saveAdminNote('${o.id}')" style="background: var(--accent-red); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; cursor: pointer;">Simpan</button>
           </div>
         </div>
 
-        ${o.proof ? `<div style="margin-top:0.75rem;"><span style="font-size:0.75rem; color:#94a3b8; display:block;">Bukti Pembayaran:</span><a href="${o.proof}" target="_blank"><img src="${o.proof}" alt="Bukti Transfer" style="max-width:100px; border-radius:4px; border:1px solid #334155;" /></a></div>` : `<p style="color:#ef4444; font-size:0.75rem; margin-top:0.5rem;">⚠️ Belum upload bukti.</p>`}
+        ${o.proof ? `<div style="margin-top:0.75rem;"><span style="font-size:0.75rem; color:var(--text-muted); display:block;">Bukti Pembayaran:</span><a href="${o.proof}" target="_blank"><img src="${o.proof}" alt="Bukti Transfer" style="max-width:100px; border-radius:4px; border:1px solid var(--border-color);" /></a></div>` : `<p style="color:#ef4444; font-size:0.75rem; margin-top:0.5rem;">⚠️ Belum upload bukti.</p>`}
 
         <div style="display:flex; gap:5px; margin-top:0.75rem; flex-wrap:wrap;">
           ${STATUSES.map(
             (s) =>
-              `<button onclick="setOrderStatus('${o.id}', '${s}')" style="background:${o.status === s ? "#2563eb" : "#1e293b"}; color:white; border:1px solid #334155; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">${s}</button>`,
+              `<button onclick="setOrderStatus('${o.id}', '${s}')" style="background:${o.status === s ? "var(--accent-red)" : "var(--bg-main)"}; color:white; border:1px solid var(--border-color); padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">${s}</button>`,
           ).join("")}
           <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">🗑️</button>
         </div>
@@ -1156,7 +1480,14 @@ async function setOrderStatus(docId, status) {
   if (!isAdmin() || !window.db) return;
   const { doc, updateDoc } = window.firebaseCollections;
   await updateDoc(doc(window.db, "orders", docId), { status });
-  showToast(`Status diperbarui ke ${status}`);
+
+  if (status === "SELESAI") {
+    showToast(
+      "Status diubah ke SELESAI (Pesan terima kasih & ajakan rating aktif)",
+    );
+  } else {
+    showToast(`Status diperbarui ke ${status}`);
+  }
 }
 
 async function deleteOrder(docId) {
@@ -1189,30 +1520,18 @@ window.addEventListener("load", () => {
     currentUser = null;
   }
 
+  applyLanguage(currentLang);
   renderProducts();
   renderCart();
   renderReviews();
   updateAuthUI();
-  showSlide(0);
   if ($("year")) $("year").textContent = new Date().getFullYear();
-
-  const btnHeader = $("googleLoginBtn");
-  if (btnHeader && !currentUser) {
-    btnHeader.onclick = openLoginModal;
-  }
 });
 
 if ($("productGrid")) {
   $("productGrid").addEventListener("click", (e) => {
     const b = e.target.closest("[data-add]");
     if (b) addToCart(Number(b.dataset.add));
-  });
-}
-
-if ($("cartItems")) {
-  $("cartItems").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-remove]");
-    if (b) removeFromCart(Number(b.dataset.remove));
   });
 }
 
