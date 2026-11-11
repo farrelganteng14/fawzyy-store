@@ -584,7 +584,7 @@ const products = [
     id: 18,
     name: "100 Robux",
     category: "robux",
-    price: 15500,
+    price: 16000,
     desc: "Robux legal via Gamepass / T-Shirt",
     icon: "R$",
     image: "robux.jpg",
