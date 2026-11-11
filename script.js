@@ -269,6 +269,18 @@ const products = [
     badge: "",
     popular: 17,
   },
+  // --- TAMBAHKAN PRODUK BARU DI BAWAH INI ---
+  {
+    id: 18,
+    name: "100 Robux",
+    category: "robux",
+    price: 15500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
+    desc: "Robux legal via Gamepass / T-Shirt",
+    icon: "R$",
+    image: "robux.jpg", // Kosongkan jika pakai ikon teks R$
+    badge: "PROMO",
+    popular: 18,
+  },
 ];
 
 const $ = (id) => document.getElementById(id);
