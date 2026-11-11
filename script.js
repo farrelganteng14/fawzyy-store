@@ -288,7 +288,7 @@ const products = [
     price: 77500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
     desc: "Robux legal via Username Roblox",
     icon: "R$",
-    image: "robux.jpg", // Kosongkan jika pakai ikon teks R$
+    image: "500.jpg", // Kosongkan jika pakai ikon teks R$
     badge: "PROMO",
     popular: 19,
   },
