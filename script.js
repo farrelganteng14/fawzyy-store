@@ -280,10 +280,10 @@ function applyLanguage(lang) {
   const textCode = $("langTextCode");
   if (flagImg && textCode) {
     if (lang === "id") {
-      flagImg.src = "images/ind.jpg"; // <-- Tambahkan folder images/
+      flagImg.src = "ind.jpg";
       textCode.textContent = "ID";
     } else {
-      flagImg.src = "images/eng.jpg"; // <-- Tambahkan folder images/
+      flagImg.src = "eng.jpg"; // atau ganti ke file bendera Inggris yang kamu punya
       textCode.textContent = "EN";
     }
   }
