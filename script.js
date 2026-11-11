@@ -275,7 +275,7 @@ const products = [
     name: "100 Robux",
     category: "robux",
     price: 15500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
-    desc: "Robux legal via Gamepass / T-Shirt",
+    desc: "Robux legal via Username Roblox",
     icon: "R$",
     image: "robux.jpg", // Kosongkan jika pakai ikon teks R$
     badge: "PROMO",
