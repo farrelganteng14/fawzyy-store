@@ -274,14 +274,14 @@ const products = [
     id: 18,
     name: "100 Robux",
     category: "robux",
-    price: 16000, // Sesuaikan harga yang diinginkan (misal Rp15.000)
-    desc: "Robux legal via Username Roblox",
+    price: 15500, // Sesuaikan harga yang diinginkan (misal Rp15.000)
+    desc: "Robux legal via Gamepass / T-Shirt",
     icon: "R$",
     image: "robux.jpg", // Kosongkan jika pakai ikon teks R$
     badge: "PROMO",
     popular: 18,
   },
-    {
+  {
     id: 19,
     name: "500 Robux",
     category: "robux",
@@ -321,10 +321,33 @@ function esc(str) {
 function showToast(message) {
   const toast = $("toast");
   if (!toast) return;
-  toast.textContent = message;
+
+  // Hitung total item terbaru di keranjang untuk ditampilkan di notifikasi
+  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+  const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+  // Ubah isi toast menjadi interaktif (bisa diklik untuk buka keranjang)
+  toast.innerHTML = `
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; cursor: pointer;" onclick="openCart()">
+      <div>
+        <strong>🛒 ${message}</strong>
+        <div style="font-size: 0.75rem; color: #38bdf8; margin-top: 2px;">
+          Total di keranjang: ${totalItems} item (${rupiah(totalPrice)}) — <strong>Klik untuk lihat</strong>
+        </div>
+      </div>
+      <span style="font-size: 1.2rem;">➔</span>
+    </div>
+  `;
+
   toast.classList.add("show");
+
+  // Clear timer lama supaya notifikasi tidak langsung hilang cepat-cepat
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => toast.classList.remove("show"), 2200);
+
+  // Notifikasi akan otomatis sembunyi setelah 5 detik (atau bisa diatur lebih lama)
+  showToast.timer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 5000);
 }
 
 function openModal(id) {
@@ -579,6 +602,66 @@ function renderProducts() {
     )
     .join("");
 
+  // Fungsi untuk memutar efek suara notifikasi (menggunakan Web Audio API tanpa file external)
+  function playNotificationSound(type = "success") {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      if (type === "success") {
+        // Suara ting (nada ganda naik)
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nada D5
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // Nada A5
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.3,
+        );
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else if (type === "delete") {
+        // Suara hapus (nada turun)
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.15);
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioCtx.currentTime + 0.2,
+        );
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+      }
+    } catch (e) {
+      console.log("Audio diblokir browser sebelum ada interaksi.");
+    }
+  }
+
+  function addToCart(id) {
+    const product = products.find((i) => i.id === id);
+    const existing = cart.find((i) => i.id === id);
+    if (existing) existing.qty += 1;
+    else cart.push({ ...product, qty: 1 });
+
+    playNotificationSound("success"); // <--- TAMBAHKAN INI
+    renderCart();
+    showToast(`${product.name} ditambahkan ke keranjang`);
+  }
+  function clearCart() {
+    if (cart.length === 0) return;
+    if (confirm("Apakah kamu yakin ingin mengosongkan semua isi keranjang?")) {
+      cart = [];
+      playNotificationSound("delete"); // <--- TAMBAHKAN INI
+      renderCart();
+      showToast("Keranjang berhasil dikosongkan");
+    }
+  }
+
   $("emptyState").hidden = shown.length > 0;
   $("allCount").textContent = products.length;
 }
@@ -596,6 +679,22 @@ function removeFromCart(id) {
   cart = cart.filter((i) => i.id !== id);
   renderCart();
 }
+function updateCartQty(id, change) {
+  const item = cart.find((i) => i.id === id);
+  if (!item) return;
+
+  item.qty += change;
+
+  // Jika jumlahnya kurang dari 1, otomatis hapus dari keranjang atau biarkan minimal 1
+  if (item.qty <= 0) {
+    cart = cart.filter((i) => i.id !== id);
+    showToast(`${item.name} dihapus dari keranjang`);
+  } else {
+    showToast(`Jumlah ${item.name} diubah menjadi ${item.qty}`);
+  }
+
+  renderCart();
+}
 
 function renderCart() {
   const totalItems = cart.reduce((s, i) => s + i.qty, 0);
@@ -609,21 +708,48 @@ function renderCart() {
     return;
   }
 
-  $("cartItems").innerHTML = cart
+  // Kita tambahkan tombol "Hapus Semua" di bagian atas daftar keranjang
+  let html = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 4px;">
+      <span style="font-size: 0.8rem; color: #94a3b8;">Daftar Produk (${totalItems})</span>
+      <button onclick="clearCart()" style="background: none; border: none; color: #ef4444; font-size: 0.75rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+        🗑️ Hapus Semua
+      </button>
+    </div>
+  `;
+
+  html += cart
     .map(
       (i) => `
-    <div class="cart-row">
-      <div class="cart-thumb" style="overflow:hidden; display:flex; align-items:center; justify-content:center;">
+    <div class="cart-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; background: #1e293b; padding: 10px; border-radius: 8px; border: 1px solid #334155;">
+      <div class="cart-thumb" style="width: 45px; height: 45px; flex-shrink: 0; overflow:hidden; display:flex; align-items:center; justify-content:center; border-radius: 6px; background: #0f172a;">
         ${i.image ? `<img src="${i.image}" alt="${i.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'" />` : i.icon}
       </div>
-      <div class="cart-detail">
-        <strong>${i.name}</strong>
-        <small>${i.qty} × ${rupiah(i.price)}</small>
+      <div class="cart-detail" style="flex: 1;">
+        <strong style="font-size: 0.9rem; color: #f8fafc; display: block; margin-bottom: 2px;">${esc(i.name)}</strong>
+        <small style="color: #38bdf8; font-size: 0.8rem;">${rupiah(i.price)}</small>
+        
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+          <button onclick="updateCartQty(${i.id}, -1)" style="background: #0f172a; color: white; border: 1px solid #334155; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">-</button>
+          <span style="font-size: 0.85rem; font-weight: bold; color: #f8fafc; min-width: 15px; text-align: center;">${i.qty}</span>
+          <button onclick="updateCartQty(${i.id}, 1)" style="background: #0f172a; color: white; border: 1px solid #334155; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">+</button>
+        </div>
       </div>
-      <button class="remove-item" data-remove="${i.id}">Hapus</button>
+      
+      <button onclick="removeFromCart(${i.id})" style="background: none; border: none; color: #ef4444; font-size: 1.1rem; cursor: pointer; padding: 4px;" title="Hapus item">🗑️</button>
     </div>`,
     )
     .join("");
+
+  $("cartItems").innerHTML = html;
+}
+function clearCart() {
+  if (cart.length === 0) return;
+  if (confirm("Apakah kamu yakin ingin mengosongkan semua isi keranjang?")) {
+    cart = [];
+    renderCart();
+    showToast("Keranjang berhasil dikosongkan");
+  }
 }
 
 function openCart() {
